@@ -8,7 +8,6 @@ PM Stack is built to help teams ship high-quality products faster — while stay
 
 ---
 
-> [!TIP]
 > Claude Code skills for PMs who build and ship code.
 
 PM Stack gives product managers a virtual team inside Claude Code. Nine specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
