@@ -108,14 +108,6 @@ See [docs/google-docs-setup.md](docs/google-docs-setup.md) for setup instruction
 
 Inspired by [gstack](https://github.com/garrytan/gstack), focused on the PM Builder.
 
-## About
-
-Created by **[Ethan Binder](https://github.com/ethanbinder)** — Senior Product Manager at Roblox, Forbes 30 Under 30, and Co-Founder of [GoPeer](https://www.gopeer.org) (acquired by Imagine Learning).
-
-At GoPeer, Ethan grew the platform to 9 million students, 400,000 teachers, and 38,000 schools — reaching 50% of U.S. school districts. At Roblox, he manages products supporting 150 million daily active users and $2.2 billion in quarterly bookings, building across the core business metrics: Acquisition, Engagement, Monetization, and Retention.
-
-PM Stack is built from the conviction that the best PMs don't just define products — they build them. The tools should match the ambition.
-
 ## Contributing
 
 PM Stack is open source under the MIT license. Contributions are welcome.
