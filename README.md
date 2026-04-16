@@ -23,7 +23,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | Phase | Skill | What It Does |
 |-------|-------|-------------|
 | **Think** | `/product-doc` | Strategic One Pager — align on the “why”: problem and success (first principles) |
-| **Think** | `/data-insights` | Data-first analysis — UX research, raw feedback, quant data, market research; validates the one-pager before planning |
+| **Think** | `/data-insights` | Data-first analysis — DS Analysis, UX research, raw feedback, market research; validates/supports the one-pager before planning |
 | **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes |
 | **Plan** | `/deck` | Strategic slide deck for presentations |
 | **Plan** | `/eng-manager` | Architecture, system design, FE/BE split, data flow, edge cases, test strategy, observability, rollout |
@@ -74,7 +74,7 @@ claude --add-dir ~/.pm-stack/skills
 
 **`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Generated as well-formatted markdown files in a `product-doc/` directory.
 
-**`/data-insights`** — Bring data-first thinking into the Think phase. Analyzes UX research, raw user feedback, quantitative product data, and market research to validate or challenge the strategic one pager before planning begins. Produces an insights brief (`product-doc/01b-data-insights.md`) with synthesized findings, confidence levels, assumption checks, and data gaps.
+**`/data-insights`** — Bring data-first thinking into the Think phase. Analyzes DS analysis, UX research, raw user feedback, and market research to validate/support the strategic one pager before planning begins. Produces an insights brief (`product-doc/01b-data-insights.md`) with synthesized findings, confidence levels, assumption checks, and data gaps.
 
 **`/deck`** — Build a strategic slide deck as a real .pptx file. Adapts to your audience — exec review, board presentation, or team standup. Default structure: Problem → Vision → Solution → Why Now → Prototype → Metrics → Ask.
 
