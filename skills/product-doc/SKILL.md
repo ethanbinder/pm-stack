@@ -25,9 +25,9 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
    - One-line description of the initiative
    - Any additional context (user feedback, metrics, prior art)
 
-2. **Verify Google Docs write capability.** Check that the current environment has an MCP connector exposing the Google Docs API's `documents.batchUpdate` endpoint — the skill needs this to create native tabs, set Pageless page setup, and apply styled text/tables. If that capability is missing, **stop** and print the Setup Guide (see "If Google Docs MCP Is Missing" section below). Do not degrade to markdown files or a tab-less Doc.
+2. **Generate markdown files.** Create a `product-doc/` directory in the user's current working directory if it doesn't exist. For each tab the user asked for this invocation (e.g. "just the strategic one pager" → only Tab 1), write a markdown file following the Tab Structure template below. Skip tabs the user didn't ask for — don't create empty stub files.
 
-3. **Generate all 10 tabs.** Always create all 10 tab *shells* in the Google Doc, even if only some are populated this invocation. Empty tabs contain only the tab's H1 title as a placeholder so subsequent runs can fill them in without restructuring the doc. Populated tabs receive real, substantive content — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details.
+3. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details.
 
 4. **Review and refine.** After generating, ask the user which tabs need refinement.
 
@@ -336,48 +336,22 @@ For each requirement, use this structure:
 
 ## Output Format
 
-Create a single Google Doc as the source of truth for the initiative:
+Create a `product-doc/` directory in the user's current working directory. Each tab maps to a markdown file:
 
-- **Title:** `[Product/Feature Name] — Product Document`
-- **Page setup:** **Pageless** (set via `documents.batchUpdate` → `UpdateDocumentStyleRequest`)
-- **Structure:** 10 native Google Docs tabs, in this order:
-  1. Strategic One Pager
-  2. Product Spec
-  3. Design Brief
-  4. Eng Design Spec
-  5. Eng Estimates
-  6. QA Spec
-  7. Experimentation Plan
-  8. Critical Launch Checklist
-  9. GTM Plan
-  10. Notes
-- **Population:** populate only the tabs the user asked for this invocation (e.g. "just the strategic one pager" → only Tab 1 is filled). Other tabs stay as H1-only shells, ready for future runs.
-- **Re-invocation:** if a product doc for the same initiative already exists, ask the user to confirm the target doc URL and append content to empty tabs rather than creating a duplicate doc.
+| # | Filename | Tab |
+|---|---|---|
+| 1 | `01-strategic-one-pager.md` | Strategic One Pager |
+| 2 | `02-product-spec.md` | Product Spec |
+| 3 | `03-design-brief.md` | Design Brief |
+| 4 | `04-eng-design-spec.md` | Eng Design Spec |
+| 5 | `05-eng-estimates.md` | Eng Estimates |
+| 6 | `06-qa-spec.md` | QA Spec |
+| 7 | `07-experimentation-plan.md` | Experimentation Plan |
+| 8 | `08-critical-launch-checklist.md` | Critical Launch Checklist |
+| 9 | `09-gtm-plan.md` | GTM Plan |
+| 10 | `10-notes.md` | Notes |
 
-## Required MCP Capabilities
-
-The skill needs a Google Docs write MCP that can perform all of the operations below. A Drive-only MCP (one that only exposes `files.create` and reads) is **not sufficient**.
-
-- **Create Google Doc** — `files.create` with `mimeType: application/vnd.google-apps.document`
-- **Create named tabs** — `documents.batchUpdate` with `CreateTabRequest`
-- **Set Pageless page setup** — `documents.batchUpdate` with `UpdateDocumentStyleRequest` (modifies `documentStyle` for pageless mode)
-- **Insert styled content** — `documents.batchUpdate` with `InsertTextRequest`, `CreateParagraphBulletsRequest`, and `InsertTableRequest`
-
-Before running the rest of the workflow, confirm all four are available. If any is missing, stop and print the Setup Guide below.
-
-## If Google Docs MCP Is Missing — Setup Guide
-
-When the required capabilities aren't available, halt execution and print this message to the user verbatim:
-
-> This skill requires a Google Docs write MCP — a Drive-only connector is not enough. To set one up:
->
-> 1. In Claude Code, run `/mcp` to list connected MCP servers.
-> 2. If no Google Docs MCP is connected, install one with `claude mcp add` — see the [Claude Code MCP docs](https://code.claude.com/docs/en/mcp.md) for options.
-> 3. The MCP must expose the Google Docs API's `documents.batchUpdate` endpoint so it can create tabs and set page style.
-> 4. After installing, authenticate via `/mcp` — this opens a browser OAuth consent flow. Tokens are stored in your system keychain and auto-refresh.
-> 5. Re-run `/product-doc`.
->
-> *(Recommended specific server: TBD — consult the most recent PM Stack release notes or the MCP registry for a vetted Google Docs write MCP.)*
+Only create files for the tabs the user asked for this invocation. If the user re-runs `/product-doc` later for additional tabs, append the new files alongside the existing ones — don't regenerate what's already there unless explicitly asked.
 
 ## Formatting Rules
 
