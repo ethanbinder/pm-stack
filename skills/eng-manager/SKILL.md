@@ -24,7 +24,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
 4. Identify related codebases — monorepo siblings, packages referenced in `package.json` / `pyproject.toml` / `go.mod`, internal services this code calls or is called by, and shared design system / SDK repos. If the user mentions a related repo, read its CLAUDE.md and entry points too.
 5. Identify downstream consumers — anything that would break if this surface changes (other apps, public API consumers, webhooks, scheduled jobs).
 
-If a product document exists (`product-doc/` directory or Google Doc), read the Eng Design Spec tab for context on what's being built.
+If a `product-doc/` directory exists, read `04-eng-design-spec.md` for context on what's being built.
 
 ## Workflow
 
