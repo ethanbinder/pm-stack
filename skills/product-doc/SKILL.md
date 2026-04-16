@@ -25,9 +25,9 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
    - One-line description of the initiative
    - Any additional context (user feedback, metrics, prior art)
 
-2. **Check for Google Docs MCP.** Determine if Google Docs MCP tools are available (look for `createDocument` or similar tools). If available, create a single Google Doc with 10 tabs. If not, generate 10 markdown files in a `product-doc/` directory.
+2. **Verify Google Docs write capability.** Check that the current environment has an MCP connector exposing the Google Docs API's `documents.batchUpdate` endpoint — the skill needs this to create native tabs, set Pageless page setup, and apply styled text/tables. If that capability is missing, **stop** and print the Setup Guide (see "If Google Docs MCP Is Missing" section below). Do not degrade to markdown files or a tab-less Doc.
 
-3. **Generate all 10 tabs.** Write substantive content for each tab — not placeholder text. Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details.
+3. **Generate all 10 tabs.** Always create all 10 tab *shells* in the Google Doc, even if only some are populated this invocation. Empty tabs contain only the tab's H1 title as a placeholder so subsequent runs can fill them in without restructuring the doc. Populated tabs receive real, substantive content — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details.
 
 4. **Review and refine.** After generating, ask the user which tabs need refinement.
 
@@ -336,21 +336,60 @@ For each requirement, use this structure:
 
 ## Output Format
 
-**If Google Docs MCP is available:**
-Create a single Google Doc titled "[Product/Feature Name] — Product Document". Create each section above as a separate tab within the document.
+Create a single Google Doc as the source of truth for the initiative:
 
-**If Google Docs MCP is not available:**
-Create a `product-doc/` directory with these files:
-- `01-strategic-one-pager.md`
-- `02-product-spec.md`
-- `03-design-brief.md`
-- `04-eng-design-spec.md`
-- `05-eng-estimates.md`
-- `06-qa-spec.md`
-- `07-experimentation-plan.md`
-- `08-critical-launch-checklist.md`
-- `09-gtm-plan.md`
-- `10-notes.md`
+- **Title:** `[Product/Feature Name] — Product Document`
+- **Page setup:** **Pageless** (set via `documents.batchUpdate` → `UpdateDocumentStyleRequest`)
+- **Structure:** 10 native Google Docs tabs, in this order:
+  1. Strategic One Pager
+  2. Product Spec
+  3. Design Brief
+  4. Eng Design Spec
+  5. Eng Estimates
+  6. QA Spec
+  7. Experimentation Plan
+  8. Critical Launch Checklist
+  9. GTM Plan
+  10. Notes
+- **Population:** populate only the tabs the user asked for this invocation (e.g. "just the strategic one pager" → only Tab 1 is filled). Other tabs stay as H1-only shells, ready for future runs.
+- **Re-invocation:** if a product doc for the same initiative already exists, ask the user to confirm the target doc URL and append content to empty tabs rather than creating a duplicate doc.
+
+## Required MCP Capabilities
+
+The skill needs a Google Docs write MCP that can perform all of the operations below. A Drive-only MCP (one that only exposes `files.create` and reads) is **not sufficient**.
+
+- **Create Google Doc** — `files.create` with `mimeType: application/vnd.google-apps.document`
+- **Create named tabs** — `documents.batchUpdate` with `CreateTabRequest`
+- **Set Pageless page setup** — `documents.batchUpdate` with `UpdateDocumentStyleRequest` (modifies `documentStyle` for pageless mode)
+- **Insert styled content** — `documents.batchUpdate` with `InsertTextRequest`, `CreateParagraphBulletsRequest`, and `InsertTableRequest`
+
+Before running the rest of the workflow, confirm all four are available. If any is missing, stop and print the Setup Guide below.
+
+## If Google Docs MCP Is Missing — Setup Guide
+
+When the required capabilities aren't available, halt execution and print this message to the user verbatim:
+
+> This skill requires a Google Docs write MCP — a Drive-only connector is not enough. To set one up:
+>
+> 1. In Claude Code, run `/mcp` to list connected MCP servers.
+> 2. If no Google Docs MCP is connected, install one with `claude mcp add` — see the [Claude Code MCP docs](https://code.claude.com/docs/en/mcp.md) for options.
+> 3. The MCP must expose the Google Docs API's `documents.batchUpdate` endpoint so it can create tabs and set page style.
+> 4. After installing, authenticate via `/mcp` — this opens a browser OAuth consent flow. Tokens are stored in your system keychain and auto-refresh.
+> 5. Re-run `/product-doc`.
+>
+> *(Recommended specific server: TBD — consult the most recent PM Stack release notes or the MCP registry for a vetted Google Docs write MCP.)*
+
+## Formatting Rules
+
+Apply these across every tab when populating content. The goal is a doc leaders can skim in 60 seconds.
+
+- **Titles:** noun phrases, max ~6 words. No full sentences.
+- **Bullets over paragraphs.** Every bullet should be scannable in under 5 seconds.
+- **Bold sparingly** — only for the leading term or a key metric inside a bullet.
+- **Tables for structured data** (estimates, test cases, channels, sign-offs). Not for prose.
+- **Italic for example/placeholder text** (matches the convention of the PM Stack reference doc).
+- **Numbers over adjectives** — "15–25% lift" beats "significant lift."
+- **Self-contained tabs** — a reader jumping directly to one tab should understand its context without reading the others.
 
 ## Rules
 
