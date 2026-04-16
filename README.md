@@ -10,7 +10,7 @@ PM Stack is built to help teams ship high-quality products faster — while stay
 
 > Claude Code skills for PMs who build and ship code.
 
-PM Stack gives product managers a virtual team inside Claude Code. Nine specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
+PM Stack gives product managers a virtual team inside Claude Code. Ten specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
 
 Built for **PM Builders** — product managers who don't just write specs, they write code. You prototype your own features, ship your own PRs, and review your own deploys. PM Stack is built from the conviction that the best PMs don't just define products — they build them. The tools should match the ambition.
 
@@ -23,6 +23,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | Phase | Skill | What It Does |
 |-------|-------|-------------|
 | **Think** | `/product-doc` | Strategic One Pager — align on the “why”: problem and success (first principles) |
+| **Think** | `/data-insights` | Data-first analysis — UX research, raw feedback, quant data, market research; validates the one-pager before planning |
 | **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes |
 | **Plan** | `/deck` | Strategic slide deck for presentations |
 | **Plan** | `/eng-manager` | Architecture, system design, FE/BE split, data flow, edge cases, test strategy, observability, rollout |
@@ -33,7 +34,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | **Ship** | `/release` | Sync, test, push, open a structured PR |
 | **Reflect** | `/memory` | Save and search learnings across sessions |
 
-*`/product-doc` spans two phases (Think and Plan), so the table has 10 rows for 9 unique skills.*
+*`/product-doc` spans two phases (Think and Plan), so the table has 11 rows for 10 unique skills.*
 
 ## Quick Start
 
@@ -72,6 +73,8 @@ claude --add-dir ~/.pm-stack/skills
 ### Strategy
 
 **`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Generated as well-formatted markdown files in a `product-doc/` directory.
+
+**`/data-insights`** — Bring data-first thinking into the Think phase. Analyzes UX research, raw user feedback, quantitative product data, and market research to validate or challenge the strategic one pager before planning begins. Produces an insights brief (`product-doc/01b-data-insights.md`) with synthesized findings, confidence levels, assumption checks, and data gaps.
 
 **`/deck`** — Build a strategic slide deck as a real .pptx file. Adapts to your audience — exec review, board presentation, or team standup. Default structure: Problem → Vision → Solution → Why Now → Prototype → Metrics → Ask.
 
