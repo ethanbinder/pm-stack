@@ -55,18 +55,19 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
 ## Problem
 [1-2 sentences: What user or business problem does this solve?]
 
+### Before
+[Short description of how things work/look today — the pain or gap. For visual changes, embed a screenshot or image here.]
+
 ## Solution
 [1-2 sentences: What approach did we take?]
+
+### After
+[Short description of how things work/look once this lands — the resolved state. For visual changes, embed a screenshot or image here.]
 
 ## Changes Made
 - [Bullet each meaningful change]
 - [Group by area if there are many changes]
 - [Include file names for significant changes]
-
-## Before / After
-| Before | After |
-|--------|-------|
-| [Screenshot or description] | [Screenshot or description] |
 
 ---
 Generated with [PM Stack](https://github.com/ethanbinder/pm-stack)
@@ -101,6 +102,7 @@ Generated with [PM Stack](https://github.com/ethanbinder/pm-stack)
 - **Never push to main/master directly.** Always use a branch and PR.
 - **Fix issues, don't skip them.** If lint fails, fix it. If tests fail, fix them. Don't use `--no-verify` or skip hooks.
 - **The PR description matters.** It's often the first thing a reviewer reads. Make it clear and complete.
-- **Before/After is for visual changes.** If the change is purely backend or non-visual, replace the Before/After section with a "Testing" section describing how to verify.
+- **Before/After subtitles apply to every PR** — visual or not. Use prose to describe the state change; embed a screenshot/image inside the subtitle when it adds clarity. These subtitles live inline with Problem and Solution, not as a separate section at the bottom.
+- **Testing section is optional.** Add a `## Testing` section after "Changes Made" when there's a specific verification procedure worth documenting (e.g. commands to run, structural checks on a docs change). Don't pad — skip it if the change is self-evidently testable.
 - **One PR per initiative.** Don't bundle unrelated changes. If you find unrelated issues during the process, note them but don't include them in this PR.
 - **Include the PR URL in your final output.** The user needs it.
