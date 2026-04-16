@@ -25,7 +25,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | **Think** | `/product-doc` | Strategic One Pager — align on the “why”: problem and success (first principles) |
 | **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes |
 | **Plan** | `/deck` | Strategic slide deck for presentations |
-| **Plan** | `/eng-manager` | Architecture, data flow, edge cases, test strategy |
+| **Plan** | `/eng-manager` | Architecture, system design, FE/BE split, data flow, edge cases, test strategy, observability, rollout |
 | **Build** | `/designer` | Design consistency, component reuse, accessibility |
 | **Build** | `/engineer` | Write code, find production bugs, auto-fix |
 | **Review** | `/security` | OWASP audit, secrets scan, auto-fix, risk report |
@@ -71,13 +71,13 @@ claude --add-dir ~/.pm-stack/skills
 
 ### Strategy
 
-**`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Delivered as a single Google Doc with native tabs and Pageless page setup via a Google Workspace MCP.
+**`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Generated as well-formatted markdown files in a `product-doc/` directory.
 
-**`/deck`** — Build a strategic slide deck as a native Google Slides presentation. Adapts to your audience — exec review, board presentation, or team standup. Default structure: Problem → Vision → Solution → Why Now → Prototype → Metrics → Ask.
+**`/deck`** — Build a strategic slide deck as a real .pptx file. Adapts to your audience — exec review, board presentation, or team standup. Default structure: Problem → Vision → Solution → Why Now → Prototype → Metrics → Ask.
 
 ### Engineering
 
-**`/eng-manager`** — Lock in architecture before writing code. Reads your codebase, produces architecture diagrams (mermaid), data flow documentation, API contracts, edge case analysis, and test strategy. Ensures new work is consistent with existing patterns.
+**`/eng-manager`** — Lock in architecture and system design before writing code. Reads your codebase and related codebases, decides the frontend/backend split, and produces architecture diagrams (mermaid), data flow, API contracts, edge case analysis, test strategy, observability plan, and rollout strategy. Ensures new work is consistent with existing patterns and defensible at 10× scale.
 
 **`/designer`** — Audit UI against existing components and design system. Ensures new interfaces reuse existing patterns before introducing new ones. Checks accessibility, responsive behavior, and design consistency. Provides specific component paths and implementation guidance.
 
@@ -92,17 +92,6 @@ claude --add-dir ~/.pm-stack/skills
 ### Meta
 
 **`/memory`** — Manage what PM Stack has learned about your project across sessions. Add patterns, pitfalls, preferences, and decisions. Search prior learnings. Review and prune to keep knowledge fresh. Learnings compound — PM Stack gets smarter on your codebase over time.
-
-## Google Workspace Integration (Required)
-
-Two skills need a Google Workspace MCP connected to Claude Code:
-
-- **`/product-doc`** creates a single Google Doc with 10 native tabs and Pageless page setup. Requires `documents.batchUpdate` (Google Docs API).
-- **`/deck`** creates a native Google Slides presentation. Requires `presentations.batchUpdate` (Google Slides API).
-
-Both skills halt and print a setup guide if the required MCP isn't present — no silent fallback to markdown or .pptx.
-
-See [docs/google-workspace-setup.md](docs/google-workspace-setup.md) for setup instructions.
 
 ## Philosophy
 
