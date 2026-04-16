@@ -10,7 +10,7 @@ PM Stack is built to help teams ship high-quality products faster — while stay
 
 > Claude Code skills for PMs who build and ship code.
 
-Built for **PM Builders** — PM Stack gives product managers a virtual team inside Claude Code. Ten specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
+Built for **PM Builders** — PM Stack gives product managers a virtual team inside Claude Code. Eleven specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
 
 ## The PM Builder Workflow
 
@@ -20,6 +20,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 
 | Phase | Skill | What It Does |
 |-------|-------|-------------|
+| **Think** | `/office-hours` | Start here. Six forcing questions that reframe your product, challenge premises, and generate alternatives. Produces a design doc that feeds every downstream skill |
 | **Think** | `/product-doc` | Strategic One Pager — align on the “why”: problem and success (first principles) |
 | **Think** | `/data-insights` | Data-first analysis — DS Analysis, UX research, raw feedback, market research; validates/supports the one-pager before planning |
 | **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes |
@@ -32,7 +33,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | **Ship** | `/release` | Sync, test, push, open a structured PR |
 | **Reflect** | `/memory` | Save and search learnings across sessions |
 
-*`/product-doc` spans two phases (Think and Plan), so the table has 11 rows for 10 unique skills.*
+*`/product-doc` spans two phases (Think and Plan), so the table has 12 rows for 11 unique skills.*
 
 ## Quick Start
 
@@ -69,6 +70,8 @@ claude --add-dir ~/.pm-stack/skills
 ## Skills
 
 ### Strategy
+
+**`/office-hours`** — Start every new initiative here. Six forcing questions (Demand Reality, Status Quo, Desperate Specificity, Narrowest Wedge, Observation & Surprise, Future-Fit) pressure-test your framing before a line of code. Pushes back on vague answers, generates 2–3 implementation alternatives, and makes you pick a scope mode — Expansion, Selective Expansion, Hold Scope, or Reduction. Output: `product-doc/00-office-hours.md`, a design doc that every downstream skill reads as context.
 
 **`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Generated as well-formatted markdown files in a `product-doc/` directory.
 
