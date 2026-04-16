@@ -2,7 +2,7 @@
 
 ### Hey, I'm Ethan Binder 👋
 
-A founder at [GoPeer](https://www.gopeer.org) (acquired), Forbes 30 Under 30, and Senior Product Manager at Roblox — energized by building products that move business metrics. Acquisition. Engagement. Monetization. Retention.
+A founder at [GoPeer](https://www.gopeer.org) ([acquired](https://www.linkedin.com/posts/ethan-binder_proud-to-announce-that-imagine-learning-has-activity-6968201533150654464-a7Fe?utm_source=share&utm_medium=member_desktop)), Forbes [30 Under 30](https://www.linkedin.com/posts/ethan-binder_forbesunder30-activity-7135339792417898496-x0RR?utm_source=share&utm_medium=member_desktop), and Senior Product Manager at [Roblox](https://www.linkedin.com/posts/ethan-binder_after-8-eventful-years-i-hung-up-my-gopeer-activity-7247295183929659394-OuqJ?utm_source=share&utm_medium=member_desktop) — energized by building products that move business metrics. Acquisition. Engagement. Monetization. Retention.
 
 I built PM Stack to help ship high-quality products, faster — while keeping teams scaling up + out.
 
