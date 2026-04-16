@@ -6,6 +6,8 @@ A founder at GoPeer ([acquired](https://www.linkedin.com/posts/ethan-binder_prou
 
 We built PM Stack to help teams ship high-quality products faster — while staying aligned around a shared goal as they scale up + out.
 
+PM Stack is built from the conviction that the best PMs don't just define products — they build them. The tools should match the ambition.
+
 ---
 
 > Claude Code skills for PMs who build and ship code.
