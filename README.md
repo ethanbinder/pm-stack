@@ -23,7 +23,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | Phase | Skill | What It Does |
 |-------|-------|-------------|
 | **Think** | `/product-doc` | Strategic One Pager — problem, vision, goals |
-| **Plan** | `/product-doc` | Full product doc with 10 structured tabs |
+| **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes |
 | **Plan** | `/deck` | Strategic slide deck for presentations |
 | **Plan** | `/eng-manager` | Architecture, data flow, edge cases, test strategy |
 | **Build** | `/designer` | Design consistency, component reuse, accessibility |
