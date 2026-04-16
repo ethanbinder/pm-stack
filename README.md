@@ -12,7 +12,7 @@ PM Stack is built to help teams ship high-quality products faster — while stay
 
 PM Stack gives product managers a virtual team inside Claude Code. Nine specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
 
-Built for **PM Builders** — product managers who don't just write specs, they write code. You prototype your own features, ship your own PRs, and review your own deploys. PM Stack matches your workflow, not an engineer's workflow.
+Built for **PM Builders** — product managers who don't just write specs, they write code. You prototype your own features, ship your own PRs, and review your own deploys. PM Stack is built from the conviction that the best PMs don't just define products — they build them. The tools should match the ambition.
 
 ## The PM Builder Workflow
 
