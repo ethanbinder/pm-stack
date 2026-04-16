@@ -1,5 +1,13 @@
 # PM Stack
 
+### Hey, I'm Ethan Binder 👋
+
+A founder at [GoPeer](https://www.gopeer.org) (acquired), Forbes 30 Under 30, and Senior Product Manager at Roblox — energized by building products that move business metrics. Acquisition. Engagement. Monetization. Retention.
+
+I built PM Stack to help ship high-quality products, faster — while keeping teams scaling up + out.
+
+---
+
 > Claude Code skills for PMs who build and ship code.
 
 PM Stack gives product managers a virtual team inside Claude Code. Nine specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
