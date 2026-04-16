@@ -52,22 +52,28 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
 6. **Open a pull request** using `gh pr create` with this format:
 
 ```
+## Summary
+[1 sentence: what this PR does]
+
 ## Problem
 [1-2 sentences: What user or business problem does this solve?]
 
 ### Before
-[Short description of how things work/look today — the pain or gap. For visual changes, embed a screenshot or image here.]
+[Insert Screenshot]
 
 ## Solution
 [1-2 sentences: What approach did we take?]
 
 ### After
-[Short description of how things work/look once this lands — the resolved state. For visual changes, embed a screenshot or image here.]
+[Insert Screenshot]
 
 ## Changes Made
 - [Bullet each meaningful change]
 - [Group by area if there are many changes]
 - [Include file names for significant changes]
+
+## Testing
+[How to verify: commands to run, steps to reproduce, links to CI runs, or `N/A` with a 1-line reason for purely structural changes]
 
 ---
 Generated with [PM Stack](https://github.com/ethanbinder/pm-stack)
@@ -102,7 +108,8 @@ Generated with [PM Stack](https://github.com/ethanbinder/pm-stack)
 - **Never push to main/master directly.** Always use a branch and PR.
 - **Fix issues, don't skip them.** If lint fails, fix it. If tests fail, fix them. Don't use `--no-verify` or skip hooks.
 - **The PR description matters.** It's often the first thing a reviewer reads. Make it clear and complete.
-- **Before/After subtitles apply to every PR** — visual or not. Use prose to describe the state change; embed a screenshot/image inside the subtitle when it adds clarity. These subtitles live inline with Problem and Solution, not as a separate section at the bottom.
-- **Testing section is optional.** Add a `## Testing` section after "Changes Made" when there's a specific verification procedure worth documenting (e.g. commands to run, structural checks on a docs change). Don't pad — skip it if the change is self-evidently testable.
+- **Summary is one sentence.** Not two. Not a paragraph. A reviewer should know what this PR does in 3 seconds of reading.
+- **Before/After are visual-only.** Drop a screenshot (or a short snippet / side-by-side diff for CLI or code-structure changes) into each `### Before` / `### After`. If there is nothing visual to show — pure docs change, backend-only change, dependency bump — **omit both subtitles entirely**. Do not pad with `N/A` or prose; the written state explanation already lives in Problem and Solution.
+- **Testing is always included.** Either describe concrete verification steps (commands, manual checks, CI evidence) or write `N/A` with a 1-line reason (e.g. `N/A — docs-only, no runtime behavior changed`). Never leave it empty.
 - **One PR per initiative.** Don't bundle unrelated changes. If you find unrelated issues during the process, note them but don't include them in this PR.
 - **Include the PR URL in your final output.** The user needs it.
