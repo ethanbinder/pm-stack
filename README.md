@@ -71,9 +71,9 @@ claude --add-dir ~/.pm-stack/skills
 
 ### Strategy
 
-**`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Works with Google Docs MCP for native doc creation, or generates markdown files as a fallback.
+**`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Delivered as a single Google Doc with native tabs and Pageless page setup via a Google Workspace MCP.
 
-**`/deck`** — Build a strategic slide deck as a real .pptx file. Adapts to your audience — exec review, board presentation, or team standup. Default structure: Problem → Vision → Solution → Why Now → Prototype → Metrics → Ask.
+**`/deck`** — Build a strategic slide deck as a native Google Slides presentation. Adapts to your audience — exec review, board presentation, or team standup. Default structure: Problem → Vision → Solution → Why Now → Prototype → Metrics → Ask.
 
 ### Engineering
 
@@ -93,11 +93,16 @@ claude --add-dir ~/.pm-stack/skills
 
 **`/memory`** — Manage what PM Stack has learned about your project across sessions. Add patterns, pitfalls, preferences, and decisions. Search prior learnings. Review and prune to keep knowledge fresh. Learnings compound — PM Stack gets smarter on your codebase over time.
 
-## Google Docs Integration (Optional)
+## Google Workspace Integration (Required)
 
-The `/product-doc` skill can create native Google Docs with tabs if you have a Google Docs MCP server configured. Without it, the skill generates well-formatted markdown files instead.
+Two skills need a Google Workspace MCP connected to Claude Code:
 
-See [docs/google-docs-setup.md](docs/google-docs-setup.md) for setup instructions.
+- **`/product-doc`** creates a single Google Doc with 10 native tabs and Pageless page setup. Requires `documents.batchUpdate` (Google Docs API).
+- **`/deck`** creates a native Google Slides presentation. Requires `presentations.batchUpdate` (Google Slides API).
+
+Both skills halt and print a setup guide if the required MCP isn't present — no silent fallback to markdown or .pptx.
+
+See [docs/google-workspace-setup.md](docs/google-workspace-setup.md) for setup instructions.
 
 ## Philosophy
 
