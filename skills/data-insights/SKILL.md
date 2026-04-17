@@ -1,11 +1,13 @@
 ---
 name: data-insights
 description: >-
-  Bring data-first thinking into the Think phase. Analyze DS analysis, UX
-  research, raw user feedback, and market research to validate/support the
-  strategic one pager before planning begins. Produces an insights brief with
-  synthesized findings, confidence levels, and data gaps. Invoke after
-  /product-doc (Strategic One Pager) and before the Plan phase.
+  Bring data-first thinking into the Think phase. Starts by asking you for
+  the questions you want answered, any raw data you already have, and any
+  other context — then analyzes DS analysis, UX research, raw user feedback,
+  and market research to validate/support the strategic one pager before
+  planning begins. Produces an insights brief with synthesized findings,
+  confidence levels, and data gaps. Invoke after /product-doc (Strategic One
+  Pager) and before the Plan phase.
 ---
 
 # Data Insights
@@ -24,13 +26,21 @@ If `product-doc/01-strategic-one-pager.md` exists in the current working directo
 
 ### Phase 1: Gather Context
 
-1. Read the strategic one pager if it exists. Extract its core assumptions — the Problem bullets, the Vision claims, and the primary metric in Goal are all hypotheses that research should validate or challenge.
-2. Ask the user what research sources are available for this initiative:
+1. **Read context first.** Read `product-doc/01-strategic-one-pager.md` if it exists. Extract its core assumptions — the Problem bullets, the Vision claims, and the primary metric in Goal are all hypotheses that research should validate or challenge.
+
+2. **Ask the user, up front, for inputs — one question at a time. Wait for each answer.** If the user says "I don't have that," record it as a gap and move on — don't block.
+
+   - **Your questions.** "What are you actually trying to find out? Which assumption in the one pager are you most unsure about, or which decision is this analysis supposed to unblock?" If there's no one pager yet, ask what the initiative is and what they'd want the data to answer.
+   - **Raw data or exports.** "Paste or attach anything you already have: analytics exports, funnel/retention CSVs, survey results, interview notes, support ticket dumps, app store reviews, NPS verbatims, competitor pages, market reports. Quantity doesn't matter — I'll tell you what's missing."
+   - **Anything else.** "Any prior research, stakeholder context, internal docs, or links I should read before I start?"
+
+3. **Then ask about the four research dimensions.** For any dimension the user already covered in step 2, skip the question. For the rest, ask what's available:
    - **DS analysis** — analytics dashboards, funnel data, retention/cohort analysis, feature usage, event logs, data science models or deep dives
    - **UX research** — prior user interviews, usability studies, persona docs, JTBD maps
    - **Raw feedback** — support ticket exports, app store reviews, NPS verbatims, in-app feedback, community threads, social listening
    - **Market research** — competitive teardowns, industry reports, analyst briefs, pricing studies
-3. If sources are referenced by path (local files or docs), read them. If they live in an external system (e.g., Amplitude, Zendesk, Looker), ask the user to paste or attach the relevant exports.
+
+4. If sources are referenced by path (local files or docs), read them. If they live in an external system (e.g., Amplitude, Zendesk, Looker), ask the user to paste or attach the relevant exports.
 
 ### Phase 2: Analyze Across Four Dimensions
 

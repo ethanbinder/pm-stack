@@ -4,8 +4,10 @@ description: >-
   Create a complete product document with 10 structured tabs: Strategic One Pager,
   Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec,
   Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes.
-  Invoke when the user wants to write a product spec, start a new initiative,
-  or create a strategic document.
+  Output as local Markdown files or as a single Google Doc with native
+  document tabs (via a connected Google Drive surface in Claude Chat, Cowork,
+  or Code). Invoke when the user wants to write a product spec, start a new
+  initiative, or create a strategic document.
 ---
 
 # Product Doc
@@ -20,16 +22,32 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 
 ## Workflow
 
-1. **Gather context.** Ask the user for:
+1. **Gather context.** Ask the user, **one question at a time** (wait for each answer):
    - Product/feature name
    - One-line description of the initiative
    - Any additional context (user feedback, metrics, prior art)
+   - Which tabs they want this run (all 10, or a specific subset like "just the strategic one pager")
 
-2. **Generate markdown files.** Create a `product-doc/` directory in the user's current working directory if it doesn't exist. For each tab the user asked for this invocation (e.g. "just the strategic one pager" → only Tab 1), write a markdown file following the Tab Structure template below. Skip tabs the user didn't ask for — don't create empty stub files.
+2. **Pick the output format.** Ask the user which format to generate:
+   - **Markdown files** — written to `product-doc/` in the current working directory (default, no setup required)
+   - **Google Docs** — one Google Doc with all requested tabs inside it as native Google Docs document tabs
 
-3. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details.
+3. **If Google Docs, confirm the environment.** Ask which Claude surface they're running in:
+   - **Claude Chat** (uses the Google Drive Connector)
+   - **Claude Cowork** (uses the Google Drive Connector)
+   - **Claude Code** (uses a Google Drive MCP server)
 
-4. **Review and refine.** After generating, ask the user which tabs need refinement.
+   Tell them to pick whichever surface they already have Google Drive connected in. If they say "not sure" or "not set up," either verify connectivity first (in Claude Code: check for a Google Drive MCP tool in the available tool list; in Chat/Cowork: ask the user to confirm the connector is enabled under Settings → Connectors) or read `docs/google-workspace-setup.md` and walk them through setup step-by-step before proceeding.
+
+4. **Generate.**
+
+   - **Markdown path:** Create a `product-doc/` directory in the user's current working directory if it doesn't exist. For each requested tab, write a markdown file following the Tab Structure template below. Skip tabs the user didn't ask for — don't create empty stub files.
+
+   - **Google Docs path:** Create **one single Google Doc** titled `{Product Name} — Product Doc`. Inside it, create **one native Google Docs document tab per requested Tab Structure entry**, in order (e.g., `01 — Strategic One Pager`, `02 — Product Spec`, …). Reference example for the tab layout: `https://docs.google.com/document/d/1PcMJUpENAPiEbMP36cHbK3zuehHXE9hGMyoxH3obO5U/edit`. Set **Page Setup → Pageless** on the document (not the default paginated layout). If a doc with this title already exists from a prior run, append new tabs alongside the existing ones instead of regenerating. Translate the Tab Structure templates 1:1 into Google Docs formatting — headings become Google Docs headings, bullet lists become bulleted lists, tables become Google Docs tables.
+
+5. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details.
+
+6. **Review and refine.** After generating, ask the user which tabs need refinement.
 
 ## Tab Structure
 
@@ -336,6 +354,8 @@ For each requirement, use this structure:
 
 ## Output Format
 
+### Markdown output
+
 Create a `product-doc/` directory in the user's current working directory. Each tab maps to a markdown file:
 
 | # | Filename | Tab |
@@ -351,7 +371,24 @@ Create a `product-doc/` directory in the user's current working directory. Each 
 | 9 | `09-gtm-plan.md` | GTM Plan |
 | 10 | `10-notes.md` | Notes |
 
-Only create files for the tabs the user asked for this invocation. If the user re-runs `/product-doc` later for additional tabs, append the new files alongside the existing ones — don't regenerate what's already there unless explicitly asked.
+### Google Docs output
+
+Create a single Google Doc titled `{Product Name} — Product Doc` with Page Setup set to **Pageless**. Each tab becomes a native Google Docs document tab inside the same doc:
+
+| # | Document tab name |
+|---|---|
+| 1 | `01 — Strategic One Pager` |
+| 2 | `02 — Product Spec` |
+| 3 | `03 — Design Brief` |
+| 4 | `04 — Eng Design Spec` |
+| 5 | `05 — Eng Estimates` |
+| 6 | `06 — QA Spec` |
+| 7 | `07 — Experimentation Plan` |
+| 8 | `08 — Critical Launch Checklist` |
+| 9 | `09 — GTM Plan` |
+| 10 | `10 — Notes` |
+
+In both cases, only create entries for the tabs the user asked for this invocation. If the user re-runs `/product-doc` later for additional tabs, append the new files/tabs alongside the existing ones — don't regenerate what's already there unless explicitly asked.
 
 ## Formatting Rules
 
