@@ -68,6 +68,8 @@ claude --add-dir ~/.pm-stack/skills
 /release        → Ship a PR
 ```
 
+**First session:** open Claude Code in any project with PM Stack on the path and Claude will ask what you're building, then offer two lanes — 0 → 1 (full strategy stack) or fast iteration (straight to a production-ready PR).
+
 ## Skills
 
 ### Strategy
