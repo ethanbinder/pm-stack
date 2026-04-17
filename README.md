@@ -20,7 +20,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 
 | Phase | Skill | What It Does |
 |-------|-------|-------------|
-| **Start** | `/start` | Run this on a fresh session. Asks what you're building, then routes you into one of two lanes: **0 → 1** (full strategy stack — `/office-hours`, `/product-doc`, `/eng-manager` — before any code) or **fast iteration** (straight to `/engineer`, `/qa`, `/pr-comments`, or `/release`). No spec or one-pager required for the fast lane |
+| **Start** | `/start` | Run this on a fresh session. Asks what you're building, then routes you into one of two lanes: **0 → 1** (full strategy stack — `/office-hours`, `/product-doc`, `/eng-manager` — before any code) or **fast iteration** (straight to any non-framing skill — `/engineer`, `/designer`, `/eng-manager`, `/qa`, `/security`, `/pr-comments`, `/release`, `/data-insights`, `/deck`, `/memory`). No spec or one-pager required for the fast lane |
 | **Think** | `/office-hours` | First step of the 0 → 1 lane. Three strategic framing questions (Wand Wave, Gap Scan, Strategic Bet) plus six forcing questions reframe your product, challenge premises, and generate alternatives. Produces a design doc that feeds every downstream skill |
 | **Think** | `/product-doc` | Strategic One Pager — align on the “why”: problem and success (first principles) |
 | **Think** | `/data-insights` | Data-first analysis — DS Analysis, UX research, raw feedback, market research; validates/supports the one-pager before planning. Starts by asking for your questions, raw data, and context |
@@ -77,7 +77,7 @@ claude --add-dir ~/.pm-stack/skills
 
 ### Start
 
-**`/start`** — The entry point when you open a new session in a PM Stack project. Asks what you're building in one or two sentences, then forks you into one of two lanes: **0 → 1** — a new bet that needs strategic framing, a one-pager, a product spec, and eng design; routes to `/office-hours`, then `/product-doc` (Strategic One Pager → full product spec), then `/eng-manager` before any `/engineer` work. **Fast iteration** — you already know what to ship; routes straight to `/engineer`, `/qa`, `/pr-comments`, or `/release`. Infers the lane when the reply already signals it; only re-asks when genuinely ambiguous. Re-invoke mid-session if you pivot.
+**`/start`** — The entry point when you open a new session in a PM Stack project. Asks what you're building in one or two sentences, then forks you into one of two lanes: **0 → 1** — a new bet that needs strategic framing, a one-pager, a product spec, and eng design; routes to `/office-hours`, then `/product-doc` (Strategic One Pager → full product spec), then `/eng-manager` before any `/engineer` work. **Fast iteration** — you already know what to ship; routes straight to any non-framing skill (`/engineer`, `/designer`, `/eng-manager`, `/qa`, `/security`, `/pr-comments`, `/release`, `/data-insights`, `/deck`, `/memory`). Infers the lane when the reply already signals it; only re-asks when genuinely ambiguous. Re-invoke mid-session if you pivot.
 
 ### Strategy
 

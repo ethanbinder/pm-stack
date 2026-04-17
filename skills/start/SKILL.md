@@ -35,7 +35,7 @@ Open with this greeting verbatim:
 >
 >   • **A new 0 → 1 bet** — needs strategic framing, a one-pager, a product spec, and eng design before a line of code. We'll start at `/office-hours`, then move through `/product-doc` and `/eng-manager`.
 >
->   • **Already know what you're building** — want to go straight to planning, code, and a PR. We'll skip to `/engineer`, `/qa`, `/pr-comments`, or `/release`.
+>   • **Already know what you're building** — want to go straight to planning, code, and a PR?
 
 Wait for the reply. Do not fill the silence with commentary or preview skills you might run.
 
@@ -53,12 +53,18 @@ Route to the matching skill and stop.
 
 **0 → 1 lane** — invoke `/office-hours` as the next skill. Name the next two skills after it so the PM Builder sees the shape of the path: `/product-doc` for the Strategic One Pager, then the full product spec, then `/eng-manager` before any code. Do not describe what `/office-hours` will do — that skill handles its own intake.
 
-**Fast-iteration lane** — pick the single best-fit skill from the user's reply and invoke it:
+**Fast-iteration lane** — pick the single best-fit skill from the user's reply and invoke it. Any skill except `/office-hours` and `/product-doc` is on the table:
 
+- `/data-insights` — DS analysis, UX research, raw feedback, market research
+- `/deck` — strategic slide deck for execs, board, or team
+- `/designer` — UI audit, component reuse, accessibility
+- `/eng-manager` — architecture, system design, FE/BE split, rollout
 - `/engineer` — writing or fixing code
+- `/security` — OWASP review, secrets scan, dependency audit
 - `/qa` — test coverage, adversarial testing, bug hunts
 - `/pr-comments` — responding to reviewer feedback on an open PR
 - `/release` — syncing, running checks, pushing, opening a PR
+- `/memory` — saving or searching project learnings across sessions
 
 If more than one applies, name them in order and ask which the user wants first.
 
