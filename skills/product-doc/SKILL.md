@@ -43,7 +43,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 
    - **Markdown path:** Create a `product-doc/` directory in the user's current working directory if it doesn't exist. For each requested tab, write a markdown file following the Tab Structure template below. Skip tabs the user didn't ask for — don't create empty stub files.
 
-   - **Google Docs path:** Create **one single Google Doc** titled `{Product Name} — Product Doc`. Inside it, create **one native Google Docs document tab per requested Tab Structure entry**, in order (e.g., `01 — Strategic One Pager`, `02 — Product Spec`, …). Reference example for the tab layout: `https://docs.google.com/document/d/1PcMJUpENAPiEbMP36cHbK3zuehHXE9hGMyoxH3obO5U/edit`. Set **Page Setup → Pageless** on the document (not the default paginated layout). If a doc with this title already exists from a prior run, append new tabs alongside the existing ones instead of regenerating. Translate the Tab Structure templates 1:1 into Google Docs formatting — headings become Google Docs headings, bullet lists become bulleted lists, tables become Google Docs tables.
+   - **Google Docs path:** Create **one single Google Doc** titled `{Product Name} — Product Doc`. Inside it, create **one native Google Docs document tab per requested Tab Structure entry**, in order (e.g., `01 — Strategic One Pager`, `02 — Product Spec`, …). Set **Page Setup → Pageless** on the document (not the default paginated layout). If a doc with this title already exists from a prior run, append new tabs alongside the existing ones instead of regenerating. Translate the Tab Structure templates 1:1 into Google Docs formatting — headings become Google Docs headings, bullet lists become bulleted lists, tables become Google Docs tables.
 
 5. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details.
 
@@ -398,7 +398,7 @@ Apply these across every tab when populating content. The goal is a doc leaders 
 - **Bullets over paragraphs.** Every bullet should be scannable in under 5 seconds.
 - **Bold sparingly** — only for the leading term or a key metric inside a bullet.
 - **Tables for structured data** (estimates, test cases, channels, sign-offs). Not for prose.
-- **Italic for example/placeholder text** (matches the convention of the PM Stack reference doc).
+- **Italic for example/placeholder text.**
 - **Numbers over adjectives** — "15–25% lift" beats "significant lift."
 - **Self-contained tabs** — a reader jumping directly to one tab should understand its context without reading the others.
 
