@@ -34,8 +34,6 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | **Ship** | `/release` | Sync, test, push, open a structured PR |
 | **Reflect** | `/memory` | Save and search learnings across sessions |
 
-*`/product-doc` spans two phases (Think and Plan), so the table has 13 rows for 12 unique skills.*
-
 ## Quick Start
 
 **Install:**
