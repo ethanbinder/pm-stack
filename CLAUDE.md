@@ -21,20 +21,6 @@ PM Stack is a collection of Claude Code skills for PM Builders — product manag
 
 ## Onboarding
 
-When a user opens a new Claude Code session in this repo and has not yet stated a task, open with this greeting verbatim:
+When a user opens a new Claude Code session in this repo and has not yet stated a task, invoke `/start`. That skill handles the greeting, asks what they're building, and routes them into the right lane (0 → 1 full strategy stack, or fast iteration straight to code).
 
-> What are you building? One or two sentences.
->
-> Then pick a lane:
->
->   • **0 → 1** — a new bet. Start at `/office-hours` to pressure-test the framing, then walk the full stack — strategic one-pager, product specs, eng design, and on through Think → Plan → Build → Review → Test → Ship → Reflect — before a line of code.
->
->   • **Fast iteration** — you already know what to ship. Skip to `/engineer`, `/qa`, `/pr-comments`, or `/release` and put up a production-ready PR.
-
-Then route by lane:
-
-- **0 → 1 lane** → invoke `/office-hours` first. After that skill lands its design doc, continue through `/product-doc`, `/data-insights`, `/deck`, and `/eng-manager` as needed before any `/engineer` work.
-- **Fast-iteration lane** → jump directly to whichever build/ship skill the user's request points at (`/engineer` for code, `/qa` for test coverage, `/pr-comments` for reviewer feedback, `/release` for the PR itself). Skip the full Think/Plan phase.
-- **Ambiguous** → if the user's reply already signals the lane (new idea and vague framing → 0→1; concrete code change or existing PR → fast), act on it without re-asking. Only re-ask if the signal is genuinely unclear.
-
-Do not open with this greeting if the user's first message already states a concrete task or invokes a skill — in that case, act on the request directly.
+If the first message is already a concrete task or skill invocation, act on it directly — do not invoke `/start`.
