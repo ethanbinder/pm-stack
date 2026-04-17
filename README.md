@@ -10,7 +10,7 @@ PM Stack is built to help teams ship high-quality products faster — while stay
 
 > Claude Code skills for PMs who build and ship code.
 
-Built for **PM Builders** — PM Stack gives product managers a virtual team inside Claude Code. Eleven specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
+Built for **PM Builders** — PM Stack gives product managers a virtual team inside Claude Code. Twelve specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
 
 ## The PM Builder Workflow
 
@@ -29,11 +29,12 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | **Build** | `/designer` | Design consistency, component reuse, accessibility |
 | **Build** | `/engineer` | Write code, find production bugs, auto-fix |
 | **Review** | `/security` | OWASP audit, secrets scan, auto-fix, risk report |
+| **Review** | `/pr-comments` | Respond to PR reviewer feedback — fixes what it agrees with, pushes back on what it doesn't, always invites live discussion |
 | **Test** | `/qa` | Adversarial testing, bug fixes, test coverage |
 | **Ship** | `/release` | Sync, test, push, open a structured PR |
 | **Reflect** | `/memory` | Save and search learnings across sessions |
 
-*`/product-doc` spans two phases (Think and Plan), so the table has 12 rows for 11 unique skills.*
+*`/product-doc` spans two phases (Think and Plan), so the table has 13 rows for 12 unique skills.*
 
 ## Quick Start
 
@@ -90,6 +91,8 @@ claude --add-dir ~/.pm-stack/skills
 **`/qa`** — Test with an adversarial mindset. Runs existing tests, writes new ones for uncovered paths, tries edge cases and error paths. Fixes bugs it finds, writes regression tests, and produces a confidence-rated test report.
 
 **`/security`** — OWASP Top 10 review against your codebase. Scans for exposed secrets, audits dependencies for known CVEs, checks auth boundaries. Auto-fixes safe issues (gitignore, input sanitization). Produces a severity-rated security report for anything that needs human judgment.
+
+**`/pr-comments`** — Respond to reviewer feedback on your open PRs. Reads inline and summary comments, classifies each as Agree / Partial / Disagree / Needs-human, and previews a plan before touching GitHub. Implements the fixes it agrees with in a single batched commit, pushes back on the ones it doesn't with specific reasoning, and always signs replies as "{Name}'s coding agent" — inviting live discussion whenever it disagrees.
 
 **`/release`** — Sync with main, run the full check suite (lint, types, tests, build), push, and open a PR with structured format: Problem, Solution, Changes Made, and Before/After screenshots.
 

@@ -17,7 +17,7 @@ Every skill in PM Stack maps to a phase of this workflow:
 | Think | `/office-hours`, `/product-doc` (Strategic One Pager tab), `/data-insights` |
 | Plan | `/product-doc` (remaining tabs), `/deck`, `/eng-manager` |
 | Build | `/designer`, `/engineer` |
-| Review | `/security` |
+| Review | `/security`, `/pr-comments` |
 | Test | `/qa` |
 | Ship | `/release` |
 | Reflect | `/memory` |
