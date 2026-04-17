@@ -1,9 +1,10 @@
 ---
 name: deck
 description: >-
-  Create a strategic slide deck presentation as a .pptx file. Covers problem,
-  solution, why now, prototype, metrics, and ask. Invoke when the user needs
-  a presentation, pitch deck, or strategic review slides.
+  Create a strategic slide deck. Output as a .pptx file or as a Google Slides
+  deck (via a connected Google Drive surface in Claude Chat, Cowork, or Code).
+  Covers problem, solution, why now, prototype, metrics, and ask. Invoke when
+  the user needs a presentation, pitch deck, or strategic review slides.
 ---
 
 # Deck
@@ -20,19 +21,34 @@ If a `product-doc/` directory exists for this initiative, read it first — the 
 
 ## Workflow
 
-1. **Gather context.** Ask the user for:
+1. **Gather context.** Ask the user, **one question at a time** (wait for each answer):
    - Topic or initiative name
    - Audience (exec review, board, team standup, stakeholder update)
    - Key message or ask (what do you want the audience to do after this deck?)
 
-2. **Adapt depth to audience:**
+2. **Pick the output format.** Ask the user which format to generate:
+   - **`.pptx` file** — a real PowerPoint file via the `anthropic-skills:pptx` skill (default, no Google setup required)
+   - **Google Slides** — a new Slides deck created in the user's Google Drive
+
+3. **If Google Slides, confirm the environment.** Ask which Claude surface they're running in:
+   - **Claude Chat** (uses the Google Drive Connector)
+   - **Claude Cowork** (uses the Google Drive Connector)
+   - **Claude Code** (uses a Google Drive MCP server)
+
+   Tell them to pick whichever surface they already have Google Drive connected in. If they say "not sure" or "not set up," either verify connectivity first (in Claude Code: check for a Google Drive / Slides MCP tool in the available tool list; in Chat/Cowork: ask the user to confirm the connector is enabled under Settings → Connectors) or read `docs/google-workspace-setup.md` and walk them through setup step-by-step before proceeding.
+
+4. **Adapt depth to audience:**
    - **Exec/Board:** High-level, metric-driven, 8–12 slides max
    - **Team/Standup:** More technical detail, 5–8 slides
    - **Stakeholder update:** Progress-focused, 6–10 slides
 
-3. **Generate the deck** using the `anthropic-skills:pptx` skill to create a real .pptx file. Populate each slide using the default structure below. Slide count is determined by audience (step 2). Skip slides not relevant to the audience; do not leave empty slides in the deck.
+5. **Generate the deck.**
 
-4. **Review.** Present the slide outline to the user and ask if any slides need adjustment before finalizing.
+   - **`.pptx` path:** Use the `anthropic-skills:pptx` skill to create a real .pptx file. Populate each slide using the default structure below. Slide count is determined by audience (step 4). Skip slides not relevant to the audience; do not leave empty slides in the deck.
+
+   - **Google Slides path:** Create a new Google Slides deck in the user's Drive, titled `{Initiative Name} — {Audience Type}`. Each slide uses the same Default Slide Structure below. Same audience-based slide count and same "no empty slides" rule apply.
+
+6. **Review.** Present the slide outline to the user and ask if any slides need adjustment before finalizing.
 
 ## Default Slide Structure
 
@@ -96,4 +112,4 @@ Apply these across every slide when populating content. The goal is a deck leade
 - The deck should tell a story: Problem → Vision → Solution → Evidence → Ask.
 - Adapt the tone to the audience. Exec decks are concise and metric-heavy. Team decks can be more technical.
 - Include data wherever possible. Numbers beat narratives.
-- Use the `anthropic-skills:pptx` skill for actual .pptx generation. Do not just output markdown.
+- When generating `.pptx`, use the `anthropic-skills:pptx` skill for actual .pptx generation — do not just output markdown. When generating Google Slides, use the connected Google Drive surface's tooling to create a real Slides deck — do not just output markdown.

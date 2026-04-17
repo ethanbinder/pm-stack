@@ -22,9 +22,9 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 |-------|-------|-------------|
 | **Think** | `/office-hours` | Start here. Six forcing questions that reframe your product, challenge premises, and generate alternatives. Produces a design doc that feeds every downstream skill |
 | **Think** | `/product-doc` | Strategic One Pager — align on the “why”: problem and success (first principles) |
-| **Think** | `/data-insights` | Data-first analysis — DS Analysis, UX research, raw feedback, market research; validates/supports the one-pager before planning |
-| **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes |
-| **Plan** | `/deck` | Strategic slide deck for presentations |
+| **Think** | `/data-insights` | Data-first analysis — DS Analysis, UX research, raw feedback, market research; validates/supports the one-pager before planning. Starts by asking for your questions, raw data, and context |
+| **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Output as Markdown files or a single Google Doc with native document tabs |
+| **Plan** | `/deck` | Strategic slide deck for presentations — output as `.pptx` or Google Slides |
 | **Plan** | `/eng-manager` | Architecture, system design, FE/BE split, data flow, edge cases, test strategy, observability, rollout |
 | **Build** | `/designer` | Design consistency, component reuse, accessibility |
 | **Build** | `/engineer` | Write code, find production bugs, auto-fix |
@@ -74,11 +74,11 @@ claude --add-dir ~/.pm-stack/skills
 
 **`/office-hours`** — Start every new initiative here. Six forcing questions (Demand Reality, Status Quo, Desperate Specificity, Narrowest Wedge, Observation & Surprise, Future-Fit) pressure-test your framing before a line of code. Pushes back on vague answers, generates 2–3 implementation alternatives, and makes you pick a scope mode — Expansion, Selective Expansion, Hold Scope, or Reduction. Output: `product-doc/00-office-hours.md`, a design doc that every downstream skill reads as context.
 
-**`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Generated as well-formatted markdown files in a `product-doc/` directory.
+**`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Choose your output at invocation: well-formatted markdown files in a `product-doc/` directory, or a single Google Doc (Pageless) with each tab as a native Google Docs document tab — via the Google Drive connector in Claude Chat/Cowork or the Google Drive MCP server in Claude Code. See [Google Workspace setup](docs/google-workspace-setup.md) if you need to wire up a connector.
 
-**`/data-insights`** — Bring data-first thinking into the Think phase. Analyzes DS analysis, UX research, raw user feedback, and market research to validate/support the strategic one pager before planning begins. Produces an insights brief (`product-doc/01b-data-insights.md`) with synthesized findings, confidence levels, assumption checks, and data gaps.
+**`/data-insights`** — Bring data-first thinking into the Think phase. Starts by asking for the questions you want answered, any raw data or exports you already have, and any other context — then analyzes DS analysis, UX research, raw user feedback, and market research to validate/support the strategic one pager before planning begins. Produces an insights brief (`product-doc/01b-data-insights.md`) with synthesized findings, confidence levels, assumption checks, and data gaps.
 
-**`/deck`** — Build a strategic slide deck as a real .pptx file. Adapts to your audience — exec review, board presentation, or team standup. Default structure: Problem → Vision → Solution → Why Now → Prototype → Metrics → Ask.
+**`/deck`** — Build a strategic slide deck. Choose your output at invocation: a real `.pptx` file, or a Google Slides deck in your Drive — via the Google Drive connector in Claude Chat/Cowork or the Google Drive MCP server in Claude Code. Adapts to your audience — exec review, board presentation, or team standup. Default structure: Problem → Vision → Solution → Why Now → Prototype → Metrics → Ask. See [Google Workspace setup](docs/google-workspace-setup.md) if you need to wire up a connector.
 
 ### Engineering
 
