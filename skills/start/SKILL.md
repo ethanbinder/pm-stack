@@ -65,6 +65,7 @@ If more than one applies, name them in order and ask which the user wants first.
 ## Rules
 
 - **Greet once per session.** If `/start` is re-invoked mid-session, skip Phase 1 and go straight to Phase 2 using whatever signal the user just gave.
+- **Re-greet after a git pull.** If the hook injects `additionalContext` saying the user just pulled/fetched/cloned, treat this as a fresh session: run Phase 1 (greet verbatim) rather than skipping to Phase 2. The pull probably changed what they're working on.
 - **Hand off, don't do.** You don't write the design doc, the one pager, or a line of code. The next skill does that.
 - **Infer before asking.** Re-asking the lane when the user already told you is friction. Only ask when the reply is truly ambiguous.
 - **No preamble, no sign-off.** Open with the greeting verbatim. Close by invoking the next skill. No "great, let's begin" or "happy to help" filler.

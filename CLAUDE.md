@@ -24,3 +24,5 @@ PM Stack is a collection of Claude Code skills for PM Builders — product manag
 When a user opens a new Claude Code session in this repo and has not yet stated a task, invoke `/start`. That skill handles the greeting, asks what they're building, and routes them into the right lane (0 → 1 full strategy stack, or fast iteration straight to code).
 
 If the first message is already a concrete task or skill invocation, act on it directly — do not invoke `/start`.
+
+`/start` is also re-invoked automatically after `git pull` / `git fetch` / `git clone` via the hook in `.claude/settings.json` — follow the hook's injected `additionalContext` when that happens.

@@ -71,6 +71,8 @@ claude --add-dir ~/.pm-stack/skills
 
 **First session:** open Claude Code in any project with PM Stack on the path and Claude will ask what you're building, then offer two lanes — 0 → 1 (full strategy stack) or fast iteration (straight to a production-ready PR).
 
+**After a pull:** if you're working inside the pm-stack repo and run `git pull` / `git fetch` / `git clone`, Claude will re-invoke `/start` automatically (via a project-level hook in `.claude/settings.json`). Copy that hook into your own project's `.claude/settings.json` if you want the same behavior in repos that have PM Stack on the path.
+
 ## Skills
 
 ### Start
