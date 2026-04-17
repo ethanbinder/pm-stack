@@ -10,7 +10,7 @@ PM Stack is built to help teams ship high-quality products faster — while stay
 
 > Claude Code skills for PMs who build and ship code.
 
-Built for **PM Builders** — PM Stack gives product managers a virtual team inside Claude Code. Twelve specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
+Built for **PM Builders** — PM Stack gives product managers a virtual team inside Claude Code. Thirteen specialized skills that cover the full product lifecycle — from writing a strategic one-pager to shipping a production PR.
 
 ## The PM Builder Workflow
 
@@ -20,7 +20,8 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 
 | Phase | Skill | What It Does |
 |-------|-------|-------------|
-| **Think** | `/office-hours` | Start here. Three strategic framing questions (Wand Wave, Gap Scan, Strategic Bet) plus six forcing questions that reframe your product, challenge premises, and generate alternatives. Produces a design doc that feeds every downstream skill |
+| **Start** | `/start` | Run this on a fresh session. Asks what you're building, then routes you into one of two lanes: **0 → 1** (full strategy stack — `/office-hours`, `/product-doc`, `/eng-manager` — before any code) or **fast iteration** (straight to `/engineer`, `/qa`, `/pr-comments`, or `/release`). No spec or one-pager required for the fast lane |
+| **Think** | `/office-hours` | First step of the 0 → 1 lane. Three strategic framing questions (Wand Wave, Gap Scan, Strategic Bet) plus six forcing questions reframe your product, challenge premises, and generate alternatives. Produces a design doc that feeds every downstream skill |
 | **Think** | `/product-doc` | Strategic One Pager — align on the “why”: problem and success (first principles) |
 | **Think** | `/data-insights` | Data-first analysis — DS Analysis, UX research, raw feedback, market research; validates/supports the one-pager before planning. Starts by asking for your questions, raw data, and context |
 | **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Output as Markdown files or a single Google Doc with native document tabs |
@@ -34,7 +35,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | **Ship** | `/release` | Sync, test, push, open a structured PR |
 | **Reflect** | `/memory` | Save and search learnings across sessions |
 
-*`/product-doc` spans two phases (Think and Plan), so the table has 13 rows for 12 unique skills.*
+*`/product-doc` spans two phases (Think and Plan), so the table has 14 rows for 13 unique skills.*
 
 ## Quick Start
 
@@ -72,9 +73,13 @@ claude --add-dir ~/.pm-stack/skills
 
 ## Skills
 
+### Start
+
+**`/start`** — The entry point when you open a new session in a PM Stack project. Asks what you're building in one or two sentences, then forks you into one of two lanes: **0 → 1** — a new bet that needs strategic framing, a one-pager, a product spec, and eng design; routes to `/office-hours`, then `/product-doc` (Strategic One Pager → full product spec), then `/eng-manager` before any `/engineer` work. **Fast iteration** — you already know what to ship; routes straight to `/engineer`, `/qa`, `/pr-comments`, or `/release`. Infers the lane when the reply already signals it; only re-asks when genuinely ambiguous. Re-invoke mid-session if you pivot.
+
 ### Strategy
 
-**`/office-hours`** — Start every new initiative here. Three strategic framing questions (Wand Wave — 2/5/10-year vision; Gap Scan — where status quo falls short of vision; Strategic Bet — what this initiative uniquely unlocks) followed by six forcing questions (Demand Reality, Status Quo, Desperate Specificity, Narrowest Wedge, Observation & Surprise, Future-Fit) pressure-test your framing before a line of code. Pushes back on vague answers, generates 2–3 implementation alternatives scored against the Strategic Bet, and makes you pick a scope mode — Expansion, Selective Expansion, Hold Scope, or Reduction. Output: `product-doc/00-office-hours.md`, a design doc that every downstream skill reads as context.
+**`/office-hours`** — First step of the 0 → 1 lane. The `/start` skill routes you here when you're building a new bet. Three strategic framing questions (Wand Wave — 2/5/10-year vision; Gap Scan — where status quo falls short of vision; Strategic Bet — what this initiative uniquely unlocks) followed by six forcing questions (Demand Reality, Status Quo, Desperate Specificity, Narrowest Wedge, Observation & Surprise, Future-Fit) pressure-test your framing before a line of code. Pushes back on vague answers, generates 2–3 implementation alternatives scored against the Strategic Bet, and makes you pick a scope mode — Expansion, Selective Expansion, Hold Scope, or Reduction. Output: `product-doc/00-office-hours.md`, a design doc that every downstream skill reads as context.
 
 **`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Choose your output at invocation: well-formatted markdown files in a `product-doc/` directory, or a single Google Doc (Pageless) with each tab as a native Google Docs document tab — via the Google Drive connector in Claude Chat/Cowork or the Google Drive MCP server in Claude Code. See [Google Workspace setup](docs/google-workspace-setup.md) if you need to wire up a connector.
 

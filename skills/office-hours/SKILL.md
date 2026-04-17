@@ -1,12 +1,13 @@
 ---
 name: office-hours
 description: >-
-  Start here. Three strategic framing questions (Wand Wave, Gap Scan, Strategic
-  Bet) followed by six forcing questions that reframe your product before you
-  write code. Pushes back on your framing, challenges premises, generates
-  implementation alternatives. Produces a design doc that feeds every
-  downstream skill. Four modes: Expansion, Selective Expansion, Hold Scope,
-  Reduction. Invoke before /product-doc at the start of any new initiative.
+  First step of the 0 → 1 lane. Three strategic framing questions (Wand Wave,
+  Gap Scan, Strategic Bet) followed by six forcing questions that reframe
+  your product before you write code. Pushes back on your framing, challenges
+  premises, generates implementation alternatives. Produces a design doc that
+  feeds every downstream skill. Four modes: Expansion, Selective Expansion,
+  Hold Scope, Reduction. Invoke via /start (or directly) when building a new
+  0 → 1 bet, before /product-doc.
 ---
 
 # Office Hours
