@@ -23,6 +23,14 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 
 If `product-doc/` already contains artifacts from a prior session, read them briefly so your hand-off is informed — but don't re-ask what those artifacts already answer.
 
+## Question Preferences
+
+Before asking any question flagged in `references/question-registry.md`, check `.pm-stack/learnings.md` (if it exists) for a `## Question Preferences` entry matching the question id. If the user has set `never-ask` and the id's `door_type` is `two-way`, auto-decide using the registry default and announce:
+
+> Auto-decided [one-line summary] → [chosen option] (your preference). Change with `/memory tune <id>`.
+
+If the id is `one-way`, ask normally and append: *"(one-way door — overrides your never-ask preference for safety.)"* See `references/question-registry.md` for the full registry.
+
 ## Workflow
 
 ### Phase 1: Greet
@@ -45,7 +53,7 @@ Decide the lane from the user's reply. Do not re-ask unless genuinely unclear.
 
 - **0 → 1 signals:** new product, new surface, fuzzy framing, words like "bet," "idea," "exploring," "not sure yet," "should we build," or a user segment stated without a feature.
 - **Fast-iteration signals:** a specific bug, a concrete file, an open PR, "fix," "add," "refactor," "ship," a component name, a filename, or a task that could be written as a PR title.
-- **Ambiguous:** the reply names a domain but no task or framing ("something in analytics," "the onboarding flow"). Ask once: *"Is this a new bet we're framing from scratch, or a concrete change you already know how to describe?"*
+- **Ambiguous:** the reply names a domain but no task or framing ("something in analytics," "the onboarding flow"). Check `.pm-stack/learnings.md` for a `start-lane-ambiguity` preference first. If silenced, auto-decide to the `0 → 1` lane (registry default) and announce the auto-decision. Otherwise ask once: *"Is this a new bet we're framing from scratch, or a concrete change you already know how to describe?"* After answering, append the hint *"Reply `tune: never-ask` to silence this next time."*
 
 ### Phase 3: Hand off
 

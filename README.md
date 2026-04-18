@@ -21,7 +21,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | Phase | Skill | What It Does |
 |-------|-------|-------------|
 | **Start** | `/start` | Run this on a fresh session. Asks what you're building, then routes you into one of two lanes: **0 → 1** (full strategy stack — `/office-hours`, `/product-doc`, `/eng-manager` — before any code) or **fast iteration** (straight to any non-framing skill — `/engineer`, `/designer`, `/eng-manager`, `/qa`, `/security`, `/pr-comments`, `/release`, `/data-insights`, `/deck`, `/memory`). No spec or one-pager required for the fast lane |
-| **Think** | `/office-hours` | First step of the 0 → 1 lane. Three strategic framing questions (Wand Wave, Gap Scan, Strategic Bet) plus six forcing questions reframe your product, challenge premises, and generate alternatives. Produces a design doc that feeds every downstream skill |
+| **Think** | `/office-hours` | First step of the 0 → 1 lane. Three strategic framing questions (Wand Wave, Gap Scan, Strategic Bet) in one batched prompt, then six forcing questions in two rounds of three, reframe your product, challenge premises, and generate alternatives. Advisor recommends a scope mode up front. Repeat asks can be silenced per-user via `/memory tune`. Produces a design doc that feeds every downstream skill |
 | **Think** | `/product-doc` | Strategic One Pager — align on the “why”: problem and success (first principles) |
 | **Think** | `/data-insights` | Data-first analysis — DS Analysis, UX research, raw feedback, market research; validates/supports the one-pager before planning. Starts by asking for your questions, raw data, and context |
 | **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Output as Markdown files or a single Google Doc with native document tabs |
@@ -33,7 +33,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | **Review** | `/pr-comments` | Respond to PR reviewer feedback — fixes what it agrees with, pushes back on what it doesn't, always invites live discussion |
 | **Test** | `/qa` | Adversarial testing, bug fixes, test coverage |
 | **Ship** | `/release` | Sync, test, push, open a structured PR |
-| **Reflect** | `/memory` | Save and search learnings across sessions |
+| **Reflect** | `/memory` | Save and search learnings across sessions. Also tunes per-question interruption preferences (`/memory tune <id> never-ask`) so routine asks get auto-decided with an inline annotation instead of re-interrupting |
 
 *`/product-doc` spans two phases (Think and Plan), so the table has 14 rows for 13 unique skills.*
 
@@ -81,7 +81,7 @@ claude --add-dir ~/.pm-stack/skills
 
 ### Strategy
 
-**`/office-hours`** — First step of the 0 → 1 lane. The `/start` skill routes you here when you're building a new bet. Three strategic framing questions (Wand Wave — 2/5/10-year vision; Gap Scan — where status quo falls short of vision; Strategic Bet — what this initiative uniquely unlocks) followed by six forcing questions (Demand Reality, Status Quo, Desperate Specificity, Narrowest Wedge, Observation & Surprise, Future-Fit) pressure-test your framing before a line of code. Pushes back on vague answers, generates 2–3 implementation alternatives scored against the Strategic Bet, and makes you pick a scope mode — Expansion, Selective Expansion, Hold Scope, or Reduction. Output: `product-doc/00-office-hours.md`, a design doc that every downstream skill reads as context.
+**`/office-hours`** — First step of the 0 → 1 lane. The `/start` skill routes you here when you're building a new bet. Three strategic framing questions (Wand Wave — 2/5/10-year vision; Gap Scan — where status quo falls short of vision; Strategic Bet — what this initiative uniquely unlocks) are asked as **one batched prompt**, followed by six forcing questions (Demand Reality, Status Quo, Desperate Specificity, Narrowest Wedge, Observation & Surprise, Future-Fit) in **two rounds of three** so the advisor can pressure-test between rounds. Pushes back on vague answers, generates 2–3 implementation alternatives scored against the Strategic Bet, and **recommends a scope mode up front** — Expansion, Selective Expansion, Hold Scope, or Reduction — that you confirm or override. Every routine ask has a stable id in [`references/question-registry.md`](references/question-registry.md) and can be silenced per-user with `/memory tune <id> never-ask`; the premise challenge (Phase 4) is a one-way door and always asks. Output: `product-doc/00-office-hours.md`, a design doc that every downstream skill reads as context.
 
 **`/product-doc`** — Create a complete product document with 10 tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Choose your output at invocation: well-formatted markdown files in a `product-doc/` directory, or a single Google Doc (Pageless) with each tab as a native Google Docs document tab — via the Google Drive connector in Claude Chat/Cowork or the Google Drive MCP server in Claude Code. See [Google Workspace setup](docs/google-workspace-setup.md) if you need to wire up a connector.
 
@@ -107,7 +107,7 @@ claude --add-dir ~/.pm-stack/skills
 
 ### Meta
 
-**`/memory`** — Manage what PM Stack has learned about your project across sessions. Add patterns, pitfalls, preferences, and decisions. Search prior learnings. Review and prune to keep knowledge fresh. Learnings compound — PM Stack gets smarter on your codebase over time.
+**`/memory`** — Manage what PM Stack has learned about your project across sessions. Add patterns, pitfalls, preferences, and decisions. Search prior learnings. Review and prune to keep knowledge fresh. Learnings compound — PM Stack gets smarter on your codebase over time. Also handles **question tuning**: `/memory tune <id> never-ask` (or an inline `tune: never-ask` reply to any routine ask) silences that question in future sessions; the skill auto-decides with a `(your preference)` annotation instead of re-interrupting. A user-origin gate refuses to record `tune:` preferences that arrived from tool output, files, PR bodies, or any indirect source — only your own chat turn can set one (profile-poisoning defense). See [`references/question-registry.md`](references/question-registry.md).
 
 ## Philosophy
 
