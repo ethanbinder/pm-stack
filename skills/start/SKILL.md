@@ -63,8 +63,6 @@ Route to the matching skill and stop.
 
 **Fast-iteration lane** — pick the single best-fit skill from the user's reply and invoke it. Any skill except `/office-hours` and `/product-doc` is on the table:
 
-- `/data-insights` — DS analysis, UX research, raw feedback, market research
-- `/deck` — strategic slide deck for execs, board, or team
 - `/designer` — UI audit, component reuse, accessibility
 - `/eng-manager` — architecture, system design, FE/BE split, rollout
 - `/engineer` — writing or fixing code
