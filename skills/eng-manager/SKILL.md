@@ -15,7 +15,7 @@ You are a senior engineering manager locking in the technical approach for a pro
 
 ## Context
 
-Read `references/pm-preamble.md` in the PM Stack directory for shared context.
+Read `references/pm-preamble.md` in the PM Stack directory for shared context. Read `references/tech-plan-template.md` for the canonical tech-plan structure you'll populate in Phase 6.
 
 **Before doing anything else:**
 1. Read the project's CLAUDE.md to understand the tech stack, conventions, and architecture.
@@ -59,6 +59,8 @@ If a `product-doc/` directory exists, read `04-eng-design-spec.md` for context o
    - Migration risks if touching existing data
 
 5. **Present to the user.** Deliver the full technical plan and ask for feedback before any implementation begins.
+
+6. **Write the tech plan.** Once the user has reviewed the inline architectural plan and approved the direction, write a `product-doc/04b-tech-plan.md` file populated from `references/tech-plan-template.md`. Fill in every section you have signal for from the conversation (Author, Team(s), Stakeholders, Objective, Key Outcomes, Problem Statement, Scope of Work, Proposal, Observability, Plan / Milestones with dev-day estimates, Rollout); leave clear placeholders for sections that genuinely need product, security, privacy, or leadership input (e.g. the Security / Privacy / Fraud questionnaires). The file ships in the branch with the PR and serves as the canonical, durable tech-plan artifact. `/release` will auto-link to it from the PR body and (when Jira CLI is on PATH) from a Jira ticket comment — no manual link work needed downstream.
 
 ## Output Format
 
@@ -137,3 +139,4 @@ Present the technical plan in a structured format:
 - Be specific about file paths. "Update the router" is vague. "Add a procedure to `src/routes/quotes.ts`" is actionable.
 - Edge case coverage should be exhaustive. Think about: empty states, concurrent access, partial failures, invalid inputs, permission boundaries, migration of existing data.
 - The test strategy should prioritize what's most likely to break, not what's easiest to test.
+- **The tech plan lives in the repo, not externally.** Always write `product-doc/04b-tech-plan.md` for any non-trivial initiative — populated from `references/tech-plan-template.md`. If a Confluence CLI is available, presence is informational only — do not auto-publish. The file in the branch is canonical; consumers (PR body, Jira ticket comments) link to its GitHub URL.

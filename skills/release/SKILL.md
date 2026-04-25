@@ -44,7 +44,12 @@ Apply a ticket-first convention to the whole release:
 
 5. **PR body.** Add a `## Jira Ticket` section at the top with the browse URL. Derive the site from the CLI's configured host (see `~/.config/atlassian-cli/config.json` or `jira config`) — do not hard-code a host.
 
-6. **Status transitions are manual.** Do not move the ticket unless the user asks.
+6. **Tech plan link.** When `product-doc/04b-tech-plan.md` exists in the branch (`test -f product-doc/04b-tech-plan.md`), post a comment on the Jira ticket linking the tech plan and the PR. Run *after* `gh pr create` returns so both URLs are known:
+   - Build the tech-plan URL as `https://github.com/{owner}/{repo}/blob/{branch}/product-doc/04b-tech-plan.md` (derive `{owner}/{repo}` from `gh repo view --json nameWithOwner` and `{branch}` from `git rev-parse --abbrev-ref HEAD`).
+   - Run `jira issue comment add KEY-XXX --body "Tech plan: <tech-plan-url> — opened in <pr-url>"`.
+   - Skip this step entirely when the tech plan file is absent.
+
+7. **Status transitions are manual.** Do not move the ticket unless the user asks.
 
 ### Confluence mode — when `confluence` is available
 
@@ -80,11 +85,14 @@ Apply a ticket-first convention to the whole release:
 
 ### Phase 3: PR
 
-6. **Open a pull request** using `gh pr create` with this format. **Default to a non-draft PR.** Pass `--draft` only when the user has explicitly asked for a draft (phrases like "draft", "draft PR", "open as draft"). If Jira mode is active, include the `## Jira Ticket` section at the top and use the `[KEY-XXX] ...` title prefix:
+6. **Open a pull request** using `gh pr create` with this format. **Default to a non-draft PR.** Pass `--draft` only when the user has explicitly asked for a draft (phrases like "draft", "draft PR", "open as draft"). If Jira mode is active, include the `## Jira Ticket` section at the top and use the `[KEY-XXX] ...` title prefix. If `product-doc/04b-tech-plan.md` exists in the branch, also include the `## Tech Plan` section linking to that file's GitHub URL — otherwise omit it:
 
 ```
 ## Jira Ticket
 [browse URL — only when Jira mode is active; otherwise omit this entire section]
+
+## Tech Plan
+[GitHub URL to product-doc/04b-tech-plan.md on the current branch — only when this file exists; otherwise omit this entire section. Build the URL as https://github.com/{owner}/{repo}/blob/{branch}/product-doc/04b-tech-plan.md]
 
 ## Summary
 [1 sentence: what this PR does]
@@ -148,4 +156,5 @@ Built with [Ethan's PM Stack](https://github.com/ethanbinder/pm-stack)
 - **One PR per initiative.** Don't bundle unrelated changes. If you find unrelated issues during the process, note them but don't include them in this PR.
 - **Every change ships through `/release`.** Other skills (`/engineer`, `/designer`, `/qa`, `/security`) hand off here — they do not commit directly. Even a one-line fix gets a branch + PR. No uncommitted "done" edits, no direct commits to `main`.
 - **Default PR is non-draft.** Pass `--draft` to `gh pr create` only when the user explicitly asks for a draft. Don't draft by default — a draft PR signals "not ready," and most fast-iteration changes are ready when they reach `/release`.
+- **Tech plan auto-link.** When `product-doc/04b-tech-plan.md` exists in the branch, the PR body always gets a `## Tech Plan` section with a GitHub URL to that file. In Jira mode, also post a Jira comment containing the tech-plan URL and the PR URL. Confluence CLI presence is informational — do not auto-publish or push the tech plan to Confluence from `/release`. The tech plan stays in the repo as the canonical artifact.
 - **Include the PR URL in your final output.** The user needs it.
