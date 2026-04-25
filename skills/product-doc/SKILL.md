@@ -81,7 +81,11 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 ### Value for [Company Name]
 - How this advances our objectives and/or moves our leading metrics.
 
-### Metrics
+## High-Level Requirements
+- What are we envisioning building? Clearly state what we're trying to build.
+- How will the end user interact with this?
+
+## Metrics
 - Primary metric this initiative moves (e.g., "Increase D7 retention by 5%")
 - Secondary metrics and guardrails
 - Success criteria — how do we know we won?
