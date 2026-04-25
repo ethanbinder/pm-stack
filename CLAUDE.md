@@ -19,6 +19,14 @@ PM Stack is a collection of Claude Code skills for PM Builders — product manag
 - When adding or removing a skill directory under `skills/`, update the count in `README.md`'s tagline ("Nine specialized skills...") in the same PR.
 - Keep `README.md` in lockstep with the rest of the repo. Any change that alters what a skill does, how it's invoked, what's in `references/` or `docs/`, or the project's setup/install flow MUST update the matching parts of `README.md` in the same PR — at minimum the workflow table row ("What It Does") and the longer per-skill description in the Strategy/Engineering/Meta sections. Don't ship the code change and the README update separately.
 
+## Shipping
+
+Every change in this repo — even a single-line edit — ships via a pull request. No direct commits to `main`. No uncommitted edits left as "done." After any code, skill, doc, or reference edit, the next move is: branch off `main` (if you're not already on a feature branch scoped to that change), commit, push, and open a PR via `/release`.
+
+- Each logical change gets its own branch and PR. Don't stack unrelated edits on an existing feature branch (e.g., don't pile a footer rebrand onto a Jira-integration branch).
+- The default PR is **non-draft**. Open as **draft** only when the user explicitly says so ("draft", "draft PR", "open as draft") — pass `--draft` to `gh pr create` in that case.
+- This rule applies to all code-touching skills (`/engineer`, `/designer`, `/qa`, `/security`, `/pr-comments`). Each ends with a hand-off to `/release` — never a direct commit to `main`.
+
 ## Onboarding
 
 When a user opens a new Claude Code session in this repo and has not yet stated a task, invoke `/start`. That skill handles the greeting, asks what they're building, and routes them into the right lane (0 → 1 full strategy stack, or fast iteration straight to code).

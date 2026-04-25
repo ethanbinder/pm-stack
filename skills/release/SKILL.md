@@ -80,7 +80,7 @@ Apply a ticket-first convention to the whole release:
 
 ### Phase 3: PR
 
-6. **Open a pull request** using `gh pr create` with this format. If Jira mode is active, include the `## Jira Ticket` section at the top and use the `[KEY-XXX] ...` title prefix.
+6. **Open a pull request** using `gh pr create` with this format. **Default to a non-draft PR.** Pass `--draft` only when the user has explicitly asked for a draft (phrases like "draft", "draft PR", "open as draft"). If Jira mode is active, include the `## Jira Ticket` section at the top and use the `[KEY-XXX] ...` title prefix:
 
 ```
 ## Jira Ticket
@@ -110,7 +110,7 @@ Apply a ticket-first convention to the whole release:
 [How to verify: commands to run, steps to reproduce, links to CI runs, or `N/A` with a 1-line reason for purely structural changes]
 
 ---
-Generated with [PM Stack](https://github.com/ethanbinder/pm-stack)
+Built with [Ethan's PM Stack](https://github.com/ethanbinder/pm-stack)
 ```
 
 7. **Report the PR URL** to the user.
@@ -146,4 +146,6 @@ Generated with [PM Stack](https://github.com/ethanbinder/pm-stack)
 - **Before/After are visual-only.** Drop a screenshot (or a short snippet / side-by-side diff for CLI or code-structure changes) into each `### Before` / `### After`. If there is nothing visual to show — pure docs change, backend-only change, dependency bump — **omit both subtitles entirely**. Do not pad with `N/A` or prose; the written state explanation already lives in Problem and Solution.
 - **Testing is always included.** Either describe concrete verification steps (commands, manual checks, CI evidence) or write `N/A` with a 1-line reason (e.g. `N/A — docs-only, no runtime behavior changed`). Never leave it empty.
 - **One PR per initiative.** Don't bundle unrelated changes. If you find unrelated issues during the process, note them but don't include them in this PR.
+- **Every change ships through `/release`.** Other skills (`/engineer`, `/designer`, `/qa`, `/security`) hand off here — they do not commit directly. Even a one-line fix gets a branch + PR. No uncommitted "done" edits, no direct commits to `main`.
+- **Default PR is non-draft.** Pass `--draft` to `gh pr create` only when the user explicitly asks for a draft. Don't draft by default — a draft PR signals "not ready," and most fast-iteration changes are ready when they reach `/release`.
 - **Include the PR URL in your final output.** The user needs it.
