@@ -1,26 +1,25 @@
-# Tech Plan: Restructure /release PR body — Summary first, hyperlinked References block
+# Tech Plan: Allow video clips in /release Before/After sections
 
 **Author**: Ethan Binder
 
-**Objective**: Reshape the `/release` PR body template so reviewers see Summary first, with Jira Ticket and Tech Plan rendered as a hyperlinked **References:** block immediately under Summary.
+**Objective**: Update the `/release` PR body template so the Before/After placeholder explicitly invites a video clip, not only a screenshot.
 
 **PRD & Design Link**:
 
 ---
 
 ## Problem Statement
-Today `/release` puts `## Jira Ticket` and `## Tech Plan` as separate top-level sections **above** `## Summary`, which pushes the actual one-line description of the PR below two metadata sections. Reviewers should see the Summary first, with the Jira and tech-plan links grouped as references underneath it.
+The `### Before` / `### After` placeholders in `/release`'s PR body template say `[Insert Screenshot]`, which implicitly steers users toward a static image even when a short video clip would be the better way to show the change (e.g. animations, multi-step UI flows, hover/transition states).
 
 ## Changes Made
-- `skills/release/SKILL.md` — Phase 3 step 6 PR body template restructured: Summary is now the first `## ` heading, followed by a `**References:**` block that conditionally renders `[Jira Ticket](URL)` (Jira mode active) and `[Tech Plan](URL)` (tech plan file exists). The whole References block is omitted when neither applies.
-- `skills/release/SKILL.md` — Phase 3 step 6 lead-in paragraph rewritten to describe the new layout.
-- `skills/release/SKILL.md` — Issue-Tracker Integration → Jira mode → step 5 wording updated from "Add a `## Jira Ticket` section at the top" to "Add a hyperlinked **Jira Ticket** entry to the **References:** block right under Summary."
+- `skills/release/SKILL.md` — both `### Before` and `### After` placeholders updated from `[Insert Screenshot]` to `[Insert Screenshot / Video]`.
+- `skills/release/SKILL.md` — Rules entry "Before/After are visual-only" extended to call out video clips alongside screenshots and side-by-side snippets/diffs, so the rule and the placeholder stay coherent.
 
 ## Testing
 N/A — single-file template / wording change in a SKILL.md, no runtime behavior. Verified by:
-- `git diff` shows only `skills/release/SKILL.md` modified, +6 / −8 lines.
-- The rewritten template was re-read end-to-end: Summary is the first `## ` heading; the **References:** block immediately follows; Problem → Before → Solution → After → Changes Made → Testing → footer are unchanged.
-- Jira mode step 5 no longer references "at the top" or `## Jira Ticket section`.
+- `git diff` shows only `skills/release/SKILL.md`, +3 / −3 lines.
+- The two placeholder occurrences in the template now read `[Insert Screenshot / Video]`.
+- The Rules entry now reads "Drop a screenshot, a short video clip, or a side-by-side snippet/diff..."
 
 ## Risks
-- None — same conditionals (Jira link only in Jira mode; Tech Plan link only when the file exists; the References block omitted when neither applies). No behavior change, only rendering layout.
+- None — purely a placeholder/wording change. No conditionals, no logic, no behavior shift.
