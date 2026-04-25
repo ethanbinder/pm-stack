@@ -47,7 +47,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 
    - **Google Docs path:** Create **one single Google Doc** titled `{Product Name} — Product Doc`. Inside it, create **one native Google Docs document tab per requested Tab Structure entry**, in order (e.g., `01 — Strategic One Pager`, `02 — Product Spec`, …). Set **Page Setup → Pageless** on the document (not the default paginated layout). If a doc with this title already exists from a prior run, append new tabs alongside the existing ones instead of regenerating. Translate the Tab Structure templates 1:1 into Google Docs formatting — headings become Google Docs headings, bullet lists become bulleted lists, tables become Google Docs tables.
 
-5. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details. When generating Tab 1 (Strategic One Pager), substitute `[Company Name]` in the Goal section's `### Value for [Company Name]` heading and `[S/M/L/XL]` in the What's Needed to Get Started section's `**Effort Estimate:**` bullet with the values resolved during intake. If either is unknown (user explicitly skipped, file unreadable), leave the literal placeholder so the user can fill it in later.
+5. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details. When generating Tab 1 (Strategic One Pager), substitute `[Company Name]` in the Goal section's `### Value for [Company Name]` heading and `[S/M/L/XL]` in the What's Needed to Get Started section's `**Effort Estimate:**` bullet with the values resolved during intake. If either is unknown (user explicitly skipped, file unreadable), leave the literal placeholder so the user can fill it in later. The Tab 1 `## Open Questions` and `## Notes` sections are intentionally manual-fill — leave the seed bullets in place rather than fabricating content. Real questions and notes get added by the writer/team over time.
 
 6. **Review and refine.** After generating, ask the user which tabs need refinement.
 
@@ -95,6 +95,12 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 - Key dependencies or blockers
 - Recommended next steps
 - **Effort Estimate:** [S/M/L/XL]
+
+## Open Questions
+- [ ] Bullet any open questions or uncertainties to resolve before shipping.
+
+## Notes
+- Free-form context — links, observations, or anything that doesn't fit elsewhere.
 ```
 
 ### Tab 2: Product Spec
