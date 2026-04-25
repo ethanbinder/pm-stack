@@ -15,7 +15,14 @@ You are a senior engineering manager locking in the technical approach for a pro
 
 ## Context
 
-Read `references/pm-preamble.md` in the PM Stack directory for shared context. Read `references/tech-plan-template.md` for the canonical tech-plan structure you'll populate in Phase 6.
+Read `references/pm-preamble.md` in the PM Stack directory for shared context. Read `references/tech-plan-template.md` for the **full** tech-plan structure you'll populate in Phase 6, and `references/tech-plan-template-small.md` for the lightweight one used in Small Mode.
+
+## Modes
+
+`/eng-manager` runs in one of two modes:
+
+- **Full mode (default).** The Workflow below — multi-phase architecture / system-design pass that produces the full `product-doc/04b-tech-plan.md` from `references/tech-plan-template.md`. Use for substantive features.
+- **Small mode.** Triggered when invoked as `/eng-manager --small` or when `/release`'s Phase 0 routes here for a trivial change. Skips the Workflow entirely; auto-populates a lightweight `product-doc/04b-tech-plan.md` from the diff against `main`. Asks **no questions** — the goal is zero friction for typo fixes / README-only changes / one-line bugs / dependency bumps. See [Small Mode](#small-mode) below.
 
 **Before doing anything else:**
 1. Read the project's CLAUDE.md to understand the tech stack, conventions, and architecture.
@@ -60,7 +67,32 @@ If a `product-doc/` directory exists, read `04-eng-design-spec.md` for context o
 
 5. **Present to the user.** Deliver the full technical plan and ask for feedback before any implementation begins.
 
-6. **Write the tech plan.** Once the user has reviewed the inline architectural plan and approved the direction, write a `product-doc/04b-tech-plan.md` file populated from `references/tech-plan-template.md`. Fill in every section you have signal for from the conversation (Author, Team(s), Stakeholders, Objective, Key Outcomes, Problem Statement, Scope of Work, Proposal, Observability, Plan / Milestones with dev-day estimates, Rollout); leave clear placeholders for sections that genuinely need product, security, privacy, or leadership input (e.g. the Security / Privacy / Fraud questionnaires). The file ships in the branch with the PR and serves as the canonical, durable tech-plan artifact. `/release` will auto-link to it from the PR body and (when Jira CLI is on PATH) from a Jira ticket comment — no manual link work needed downstream.
+6. **Write the tech plan.** Once the user has reviewed the inline architectural plan and approved the direction, write a `product-doc/04b-tech-plan.md` file populated from `references/tech-plan-template.md`. Fill in every section you have signal for from the conversation (Author, Team(s), Stakeholders, Objective, Key Outcomes, Problem Statement, Scope of Work, Proposal, Observability, Plan / Milestones with dev-day estimates, Rollout); leave clear placeholders for sections that genuinely need product, security, privacy, or leadership input (e.g. the Security / Privacy / Fraud questionnaires). The file ships in the branch with the PR and serves as the canonical, durable tech-plan artifact. `/release` will auto-link to it from the PR body and (when Jira CLI is on PATH) from a Jira ticket comment — no manual link work needed downstream. Create `product-doc/` if it doesn't exist.
+
+## Small Mode
+
+Small mode runs when invoked as `/eng-manager --small` or when `/release` Phase 0 routes here on a `small` answer. It produces a lightweight `product-doc/04b-tech-plan.md` from the diff alone — **no questions, no Workflow phases**.
+
+1. **Gather diff signal.** Run these in parallel:
+   - `git rev-parse --abbrev-ref HEAD` → current branch name
+   - `git diff main...HEAD --stat` → files changed + line counts
+   - `git diff main...HEAD` (full diff, capped at ~500 lines) → actual changes
+   - `git log main..HEAD --pretty=format:"%s%n%b" --no-merges` → commit messages on the branch
+   - `git config user.name` → author
+
+2. **Infer the populating values:**
+   - **Feature / Change Name** → first commit message subject; if multiple commits, use the branch name (kebab-case → Title Case).
+   - **Author** → `git config user.name`.
+   - **Objective** → one sentence synthesized from the dominant commit message subject.
+   - **PRD & Design Link** → leave blank (small mode doesn't expect one).
+   - **Problem Statement** → 1–3 sentences synthesized from the commit message bodies and the diff scope. Be honest about uncertainty — short and specific beats long and vague.
+   - **Changes Made** → bullets, one per meaningful file or logical group, derived from the `--stat` and the diff. Group when the same logical change touches several files (e.g. *"Updated 3 README sections and 2 SKILL.md files for the new policy"*).
+   - **Testing** → if the diff includes tests, summarize what's covered. If purely docs / config / template, write `N/A — docs / template change, no runtime behavior`. Do not invent tests that weren't run.
+   - **Risks** → empty unless the diff contains: schema migration markers, force-push patterns, secrets touched, deletes of >50 lines without replacement, or auth-boundary touches. Otherwise leave the bullet list empty.
+
+3. **Write the file.** Populate `product-doc/04b-tech-plan.md` from `references/tech-plan-template-small.md`. Create `product-doc/` if it doesn't exist.
+
+4. **Report.** One-line confirmation: *"Wrote small tech plan to `product-doc/04b-tech-plan.md` from the diff. Re-run `/release` to ship — the tech plan will be auto-linked from the PR (and Jira, if configured)."*
 
 ## Output Format
 
@@ -140,3 +172,4 @@ Present the technical plan in a structured format:
 - Edge case coverage should be exhaustive. Think about: empty states, concurrent access, partial failures, invalid inputs, permission boundaries, migration of existing data.
 - The test strategy should prioritize what's most likely to break, not what's easiest to test.
 - **The tech plan lives in the repo, not externally.** Always write `product-doc/04b-tech-plan.md` for any non-trivial initiative — populated from `references/tech-plan-template.md`. If a Confluence CLI is available, presence is informational only — do not auto-publish. The file in the branch is canonical; consumers (PR body, Jira ticket comments) link to its GitHub URL.
+- **Small mode is no-questions-asked.** When invoked with `--small` (or when `/release` routes here on a `small` answer), do not ask the user anything. Read the diff, populate `references/tech-plan-template-small.md`, write the file, report. The whole point is to remove friction on trivial PRs — preserving the "every PR links to a tech plan" rule without slowing the user down for typo fixes.

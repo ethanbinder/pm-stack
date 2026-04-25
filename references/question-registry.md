@@ -27,6 +27,7 @@ See `skills/memory/SKILL.md` for how preferences are written and the user-origin
 | `office-hours-premise-response` | office-hours | **one-way** | Phase 4 — PM Builder responds to the 2–3 sharpest contradictions the advisor surfaced. This is the skill's load-bearing adversarial step; silencing it turns `/office-hours` into a doc-generator with no stress-test. | (n/a — always asks) | no |
 | `office-hours-mode-select` | office-hours | two-way | Phase 6 — pick Expansion / Selective Expansion / Hold Scope / Reduction. Advisor always recommends one with a one-line reason. | accept the advisor's recommended mode | yes |
 | `office-hours-next-skill` | office-hours | two-way | Phase 7 — run `/product-doc` next or `/data-insights` first? | `/product-doc` (the default downstream hand-off) | yes |
+| `release-tech-plan-prompt` | release | two-way | Phase 0 — when `product-doc/04b-tech-plan.md` is missing, choose between writing a `full` tech plan (via `/eng-manager`) or a `small` one (via `/eng-manager --small`, auto-populated from the diff). Skip is **not** an option — every PR must link to a tech plan. | `small` (auto-populated from the diff; zero friction for trivial PRs while still satisfying the mandatory-tech-plan rule) | yes |
 
 ## Adding a new ask
 
