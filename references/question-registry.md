@@ -27,6 +27,7 @@ See `skills/memory/SKILL.md` for how preferences are written and the user-origin
 | `office-hours-premise-response` | office-hours | **one-way** | Phase 4 — PM Builder responds to the 2–3 sharpest contradictions the advisor surfaced. This is the skill's load-bearing adversarial step; silencing it turns `/office-hours` into a doc-generator with no stress-test. | (n/a — always asks) | no |
 | `office-hours-mode-select` | office-hours | two-way | Phase 6 — pick Expansion / Selective Expansion / Hold Scope / Reduction. Advisor always recommends one with a one-line reason. | accept the advisor's recommended mode | yes |
 | `office-hours-next-skill` | office-hours | two-way | Phase 7 — run `/product-doc` next or `/data-insights` first? | `/product-doc` (the default downstream hand-off) | yes |
+| `release-tech-plan-prompt` | release | two-way | Phase 0 — when `product-doc/04b-tech-plan.md` is missing, offer to invoke `/eng-manager` first to write one before opening the PR. | `skip` (proceed without a tech plan; the PR body omits `## Tech Plan` and no Jira comment is posted) | yes |
 
 ## Adding a new ask
 

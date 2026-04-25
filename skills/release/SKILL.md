@@ -58,6 +58,33 @@ Apply a ticket-first convention to the whole release:
 
 ## Workflow
 
+### Phase 0: Tech-plan check
+
+Before doing any expensive work (sync, lint, tests), check whether a tech plan exists for this branch and offer to create one if missing. Fail fast on user intent — don't burn cycles on a PR the user might want to redirect through `/eng-manager` first.
+
+1. **Detect.** Run `test -f product-doc/04b-tech-plan.md`.
+   - **Exists** → skip the rest of Phase 0; proceed to Phase 1.
+   - **Missing** → continue.
+
+2. **Check Question Preferences.** Look in `.pm-stack/learnings.md` for a `release-tech-plan-prompt` entry under `## Question Preferences` (see `references/question-registry.md`).
+   - **`never-ask` is set** → auto-decide to **skip**, announce: *"Auto-decided: opening this PR without a tech plan (your preference). Change with `/memory tune release-tech-plan-prompt`."* Then proceed to Phase 1.
+   - **Otherwise** → ask once.
+
+3. **Ask.** Use `AskUserQuestion` (or a plain three-option prompt) with this wording:
+
+   > No `product-doc/04b-tech-plan.md` was found in this branch. Want to invoke `/eng-manager` first to write one? `/release` will then auto-link it from the PR body and (in Jira mode) the Jira ticket.
+   >
+   > - **yes** — stop `/release`, run `/eng-manager` to write the tech plan, then re-run `/release`
+   > - **skip** — proceed without a tech plan (fine for typo fixes, README-only changes, trivial fixes)
+   > - reply `tune: never-ask` to silence this question; default to `skip`
+
+   After asking, emit the hint: *"Reply `tune: never-ask` to silence this next time."*
+
+4. **Act on the answer.**
+   - **yes** → stop the workflow. Tell the user: *"Run `/eng-manager` next, then re-run `/release` — your tech plan will be auto-linked into the PR body and Jira ticket."* Do not proceed to Phase 1.
+   - **skip** → proceed to Phase 1. The PR body will omit `## Tech Plan`; in Jira mode, the Jira tech-plan comment will be skipped.
+   - **`tune: never-ask`** → record the preference via `/memory` (the user-origin gate in `skills/memory/SKILL.md` rejects any indirect source), then proceed as `skip`.
+
 ### Phase 1: Prepare
 
 1. **Sync with main.**
@@ -157,4 +184,5 @@ Built with [Ethan's PM Stack](https://github.com/ethanbinder/pm-stack)
 - **Every change ships through `/release`.** Other skills (`/engineer`, `/designer`, `/qa`, `/security`) hand off here — they do not commit directly. Even a one-line fix gets a branch + PR. No uncommitted "done" edits, no direct commits to `main`.
 - **Default PR is non-draft.** Pass `--draft` to `gh pr create` only when the user explicitly asks for a draft. Don't draft by default — a draft PR signals "not ready," and most fast-iteration changes are ready when they reach `/release`.
 - **Tech plan auto-link.** When `product-doc/04b-tech-plan.md` exists in the branch, the PR body always gets a `## Tech Plan` section with a GitHub URL to that file. In Jira mode, also post a Jira comment containing the tech-plan URL and the PR URL. Confluence CLI presence is informational — do not auto-publish or push the tech plan to Confluence from `/release`. The tech plan stays in the repo as the canonical artifact.
+- **Soft-prompt for missing tech plans.** Phase 0 catches a missing tech plan and asks once, with three options (yes / skip / `tune: never-ask`). Default on `never-ask` is `skip` — silenced users get tech-plan-less PRs by default. Users who want every PR auto-tech-planned should not silence; they should answer "yes" each time, or pre-instruct via their project's CLAUDE.md.
 - **Include the PR URL in your final output.** The user needs it.
