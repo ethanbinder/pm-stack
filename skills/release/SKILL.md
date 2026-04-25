@@ -45,7 +45,7 @@ Apply a ticket-first convention to the whole release:
 5. **PR body.** Add a hyperlinked **Jira Ticket** entry to the **References:** block right under Summary — Markdown form: `[Jira Ticket](<browse URL>)`. Derive the site from the CLI's configured host (see `~/.config/atlassian-cli/config.json` or `jira config`) — do not hard-code a host.
 
 6. **Tech plan link.** When `product-doc/04b-tech-plan.md` exists in the branch (`test -f product-doc/04b-tech-plan.md`), post a comment on the Jira ticket linking the tech plan and the PR. Run *after* `gh pr create` returns so both URLs are known:
-   - Build the tech-plan URL as `https://github.com/{owner}/{repo}/blob/{branch}/product-doc/04b-tech-plan.md` (derive `{owner}/{repo}` from `gh repo view --json nameWithOwner` and `{branch}` from `git rev-parse --abbrev-ref HEAD`).
+   - Build the tech-plan URL as `https://github.com/{owner}/{repo}/blob/{commit}/product-doc/04b-tech-plan.md` (derive `{owner}/{repo}` from `gh repo view --json nameWithOwner` and `{commit}` from `git rev-parse HEAD` — **use the commit SHA, not the branch name**, so the link stays valid after `gh pr merge --delete-branch` removes the feature branch on remote).
    - Run `jira issue comment add KEY-XXX --body "Tech plan: <tech-plan-url> — opened in <pr-url>"`.
    - Skip this step entirely when the tech plan file is absent.
 
@@ -122,7 +122,7 @@ Apply a ticket-first convention to the whole release:
 
 **References:**
 - [Jira Ticket](browse URL — only when Jira mode is active)
-- [Tech Plan](GitHub URL to product-doc/04b-tech-plan.md on the current branch — only when this file exists. Build the URL as https://github.com/{owner}/{repo}/blob/{branch}/product-doc/04b-tech-plan.md)
+- [Tech Plan](GitHub URL to product-doc/04b-tech-plan.md — only when this file exists. Build the URL as https://github.com/{owner}/{repo}/blob/{commit}/product-doc/04b-tech-plan.md, where `{commit}` is `git rev-parse HEAD` on the branch. **Use the commit SHA, not the branch name**, so the link stays valid after `gh pr merge --delete-branch` removes the feature branch on remote.)
 
 ## Problem
 [1-2 sentences: What user or business problem does this solve?]
