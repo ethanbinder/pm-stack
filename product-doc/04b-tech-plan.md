@@ -1,29 +1,29 @@
-# Tech Plan: Add Value framing to Strategic One Pager Goal section
+# Tech Plan: Add Effort Estimate to Strategic One Pager
 
 **Author**: Ethan Binder
 
-**Objective**: Restructure the `/product-doc` Strategic One Pager Goal section so it leads with two value statements — Value for End User and Value for [Company Name] — before the existing metrics bullets, and prompt the user for the company name during intake (with persistence in `.pm-stack/learnings.md` so future runs don't re-ask).
+**Objective**: Add an `**Effort Estimate:**` (S / M / L / XL) field to the Strategic One Pager's `## What's Needed to Get Started` section, and prompt the user for it during `/product-doc` intake whenever the Strategic One Pager is requested. No persistence — effort is task-specific.
 
 **PRD & Design Link**:
 
 ---
 
 ## Problem Statement
-The Strategic One Pager Goal section jumped straight to metrics with no framing of *why* those metrics matter — to the end user, or to the business. PMs writing one pagers had to invent that framing each time, and there was no consistent place for the "value to user / value to company" narrative that exec reviewers expect.
+The Strategic One Pager listed asks, dependencies, and next steps, but no effort sizing. Reviewers and PMs routinely want a quick "how big is this?" stamp before deciding whether to invest the time to read deeper. S/M/L/XL t-shirt sizing is already the convention in Tab 5 (Eng Estimates), so adopting it here keeps the doc internally consistent.
 
 ## Changes Made
-- `skills/product-doc/SKILL.md` — Tab 1 Goal template: replaced the flat 3-bullet block with three H3 subsections: `### Value for End User`, `### Value for [Company Name]`, `### Metrics`. Existing metrics bullets are preserved verbatim under the new `### Metrics` heading.
-- `skills/product-doc/SKILL.md` — Workflow intake (`## Workflow` step 1): added a conditional company-name question. Skill only asks when the requested tabs include the Strategic One Pager AND `.pm-stack/learnings.md` does not already contain a `Company:` line under `## Project Facts`. Once answered, the value is appended to `.pm-stack/learnings.md` so future runs skip the question.
-- `skills/product-doc/SKILL.md` — Generate step (`## Workflow` step 5): instructs the skill to substitute `[Company Name]` in the Tab 1 Goal heading with the resolved company name; falls back to leaving the literal placeholder if unknown.
+- `skills/product-doc/SKILL.md` — Tab 1 What's Needed to Get Started template: appended `- **Effort Estimate:** [S/M/L/XL]` as the closing bullet of the section. Bolded inline-label pattern matches Tab 2 Product Spec bullets (`SKILL.md:97-103`).
+- `skills/product-doc/SKILL.md` — Workflow intake (`## Workflow` step 1): added a conditional effort-estimate question. Skill only asks when the requested tabs include the Strategic One Pager. Phrasing: *"Do you estimate the effort as S, M, L, or XL?"* Accept `S`, `M`, `L`, `XL` (case-insensitive) or `skip`. **No persistence** — unlike `Company:`, the effort answer is task-specific and is asked every run.
+- `skills/product-doc/SKILL.md` — Generate step (`## Workflow` step 5): substitution sentence extended to cover `[S/M/L/XL]` alongside `[Company Name]`. Same fallback semantics — if the user skips, the literal placeholder ships.
 
-Tabs 2–10 are unchanged. The H3-subsection pattern reuses the convention already established in Tab 2's Product Spec (`### [Requirement Name]` blocks). Persistence reuses the `.pm-stack/learnings.md` file already maintained by `/memory` — no new file format introduced.
+Tabs 2–10 are unchanged. Tab 5 (Eng Estimates) keeps its component-level effort table — this Tab 1 estimate is intentionally a single high-level number, not a duplicate of that table.
 
 ## Testing
 N/A — pure SKILL.md template + workflow-instruction edit, no runtime behavior in this repo. Verified by:
 - `git diff --stat` shows only `skills/product-doc/SKILL.md` and `product-doc/04b-tech-plan.md`.
-- The Tab 1 `## Goal` block in `skills/product-doc/SKILL.md` now contains `### Value for End User`, `### Value for [Company Name]`, and `### Metrics` in that order.
-- The intake list in `## Workflow` step 1 includes the new conditional company-name bullet.
-- The Generate step in `## Workflow` step 5 mentions `[Company Name]` substitution.
+- Tab 1's `## What's Needed to Get Started` block now ends with `- **Effort Estimate:** [S/M/L/XL]`.
+- Workflow intake list now contains the conditional effort-estimate bullet.
+- Generate step now mentions both `[Company Name]` and `[S/M/L/XL]` substitution.
 
 ## Risks
-- None — purely a template + workflow-instruction edit. No conditionals or logic outside the skill's own runtime behavior; existing `.pm-stack/learnings.md` files won't be corrupted because the skill only appends a `Company:` line under `## Project Facts` (creating the section if absent). Other 9 tabs unaffected. Existing one pagers already on disk are not back-filled.
+- None — purely a template + workflow-instruction edit. No persistence change, no logic change in `.pm-stack/learnings.md`. Other 9 tabs unaffected. Existing one pagers already on disk are not back-filled.
