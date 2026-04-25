@@ -19,6 +19,37 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
 **Before starting:**
 1. Read the project's CLAUDE.md to understand the build, test, and lint commands.
 2. Check git status to understand what branch you're on and what's changed.
+3. Detect issue-tracker integration: run `command -v jira` and `command -v confluence`. If either is present, enable the matching integration section below. If neither is present, skip this entirely and proceed as a plain GitHub flow.
+
+## Issue-Tracker Integration (auto-enabled)
+
+These sections activate only when their CLI is present on the PATH. They encode a generic Jira/Confluence + GitHub workflow — no org-specific content belongs here.
+
+### Jira mode — when `jira` is available
+
+Apply a ticket-first convention to the whole release:
+
+1. **Derive the project key.**
+   - Run `jira config default_project` to get the configured key (e.g. `ABC`).
+   - If unset or ambiguous, ask the user for the key before continuing.
+
+2. **Ensure a ticket exists before opening the PR.**
+   - Look for a ticket key in the current branch name, the most recent commit message, or prior conversation.
+   - If none is found, confirm with the user and create one with `jira create --project <KEY> --summary "..."`. Keep the description minimal — one line or the PR link — unless the user provides content.
+
+3. **Branch naming.** When naming (or renaming) a branch, use `KEY-XXX-short-description`.
+   - **Gotcha:** do not rename the branch of a PR that is already open. GitHub's branch-rename API can close the PR instead of re-pointing it. If the branch must be renamed on an open PR, open a new PR from the renamed branch and note the supersession in the body.
+
+4. **PR title.** Prefix with the ticket key: `[KEY-XXX] Short description`.
+
+5. **PR body.** Add a `## Jira Ticket` section at the top with the browse URL. Derive the site from the CLI's configured host (see `~/.config/atlassian-cli/config.json` or `jira config`) — do not hard-code a host.
+
+6. **Status transitions are manual.** Do not move the ticket unless the user asks.
+
+### Confluence mode — when `confluence` is available
+
+- If the PR body or ticket references a Confluence page ID or URL, resolve it via `confluence get <ID>` to confirm it exists before linking.
+- Do not create or edit Confluence pages from `/release` — that belongs to a separate flow.
 
 ## Workflow
 
@@ -49,9 +80,12 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
 
 ### Phase 3: PR
 
-6. **Open a pull request** using `gh pr create` with this format. **Default to a non-draft PR.** Pass `--draft` only when the user has explicitly asked for a draft (phrases like "draft", "draft PR", "open as draft"):
+6. **Open a pull request** using `gh pr create` with this format. **Default to a non-draft PR.** Pass `--draft` only when the user has explicitly asked for a draft (phrases like "draft", "draft PR", "open as draft"). If Jira mode is active, include the `## Jira Ticket` section at the top and use the `[KEY-XXX] ...` title prefix:
 
 ```
+## Jira Ticket
+[browse URL — only when Jira mode is active; otherwise omit this entire section]
+
 ## Summary
 [1 sentence: what this PR does]
 
