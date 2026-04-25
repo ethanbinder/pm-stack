@@ -26,7 +26,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 | **Think** | `/data-insights` | Data-first analysis — DS Analysis, UX research, raw feedback, market research; validates/supports the one-pager before planning. Starts by asking for your questions, raw data, and context |
 | **Plan** | `/product-doc` | Full product doc with 10 structured tabs: Strategic One Pager, Product Spec, Design Brief, Eng Design Spec, Eng Estimates, QA Spec, Experimentation Plan, Critical Launch Checklist, GTM Plan, and Notes. Output as Markdown files or a single Google Doc with native document tabs |
 | **Plan** | `/deck` | Strategic slide deck for presentations — output as `.pptx` or Google Slides |
-| **Plan** | `/eng-manager` | Architecture, system design, FE/BE split, data flow, edge cases, test strategy, observability, rollout |
+| **Plan** | `/eng-manager` | Architecture, system design, FE/BE split, data flow, edge cases, test strategy, observability, rollout — and a durable tech-plan markdown artifact written to `product-doc/04b-tech-plan.md` |
 | **Build** | `/designer` | Design consistency, component reuse, accessibility |
 | **Build** | `/engineer` | Write code, find production bugs, auto-fix |
 | **Review** | `/security` | OWASP audit, secrets scan, auto-fix, risk report |
@@ -91,7 +91,7 @@ claude --add-dir ~/.pm-stack/skills
 
 ### Engineering
 
-**`/eng-manager`** — Lock in architecture and system design before writing code. Reads your codebase and related codebases, decides the frontend/backend split, and produces architecture diagrams (mermaid), data flow, API contracts, edge case analysis, test strategy, observability plan, and rollout strategy. Ensures new work is consistent with existing patterns and defensible at 10× scale.
+**`/eng-manager`** — Lock in architecture and system design before writing code. Reads your codebase and related codebases, decides the frontend/backend split, and produces architecture diagrams (mermaid), data flow, API contracts, edge case analysis, test strategy, observability plan, and rollout strategy. Ensures new work is consistent with existing patterns and defensible at 10× scale. Also writes a durable tech-plan artifact to `product-doc/04b-tech-plan.md` (modeled on a comprehensive industry tech-plan template — see [`references/tech-plan-template.md`](references/tech-plan-template.md)). `/release` auto-links to this file from the PR body and, in Jira mode, from a Jira ticket comment.
 
 **`/designer`** — Audit UI against existing components and design system. Ensures new interfaces reuse existing patterns before introducing new ones. Checks accessibility, responsive behavior, and design consistency. Provides specific component paths and implementation guidance.
 
@@ -103,7 +103,7 @@ claude --add-dir ~/.pm-stack/skills
 
 **`/pr-comments`** — Respond to reviewer feedback on your open PRs. Reads inline and summary comments, classifies each as Agree / Partial / Disagree / Needs-human, and previews a plan before touching GitHub. Implements the fixes it agrees with in a single batched commit, pushes back on the ones it doesn't with specific reasoning, and always signs replies as "{Name}'s coding agent" — inviting live discussion whenever it disagrees.
 
-**`/release`** — Sync with main, run the full check suite (lint, types, tests, build), push, and open a PR with structured format: Problem, Solution, Changes Made, and Before/After screenshots. Default is a **non-draft** PR; pass "draft" / "draft PR" / "open as draft" to open it as a draft instead. Every change in PM Stack ships through here — even a one-line edit. Other skills (`/engineer`, `/designer`, `/qa`, `/security`, `/pr-comments`) hand off to `/release` rather than committing directly to `main`.
+**`/release`** — Sync with main, run the full check suite (lint, types, tests, build), push, and open a PR with structured format: Problem, Solution, Changes Made, and Before/After screenshots. Default is a **non-draft** PR; pass "draft" / "draft PR" / "open as draft" to open it as a draft instead. When a `product-doc/04b-tech-plan.md` exists in the branch, the PR body and (in Jira mode) a Jira comment auto-link to it. Every change in PM Stack ships through here — even a one-line edit. Other skills (`/engineer`, `/designer`, `/qa`, `/security`, `/pr-comments`) hand off to `/release` rather than committing directly to `main`.
 
 ### Meta
 
