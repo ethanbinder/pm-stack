@@ -76,7 +76,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
 [How to verify: commands to run, steps to reproduce, links to CI runs, or `N/A` with a 1-line reason for purely structural changes]
 
 ---
-Generated with [PM Stack](https://github.com/ethanbinder/pm-stack)
+Built with [Ethan's PM Stack](https://github.com/ethanbinder/pm-stack)
 ```
 
 7. **Report the PR URL** to the user.
