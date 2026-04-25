@@ -56,6 +56,9 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 ```
 # [Product/Feature Name] — Strategic One Pager
 
+**Title:** [insert title]
+**Contributors:** [tag contributors]
+
 ## Summary
 - One paragraph. What is this, why does it matter, what's the expected outcome.
 
