@@ -71,6 +71,10 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
    - Run relevant tests if they exist
    - Fix any failures
 
+### Phase 5: Hand off to `/release`
+
+9. **Ship via a PR.** Once verification passes, hand off to `/release` to commit, push, and open a pull request. Even a single-line fix goes through `/release` — never commit directly to `main`. If the user wants a draft PR, they'll say so; pass that signal along to `/release`.
+
 ## Output Format
 
 After implementation, provide a brief summary:
@@ -101,3 +105,4 @@ After implementation, provide a brief summary:
 - **Production-first mindset.** Every line you write will run in production. Think about failure modes, not just happy paths.
 - **Run the checks.** Don't hand code back to the user without running lint, typecheck, and tests. Fix failures before reporting.
 - **Be honest about gaps.** If you're unsure about something, flag it. A flagged uncertainty is better than a silent bug.
+- **Every change ships via a PR.** After verification, hand off to `/release` — even one-line fixes. Never commit directly to `main`, and never leave an edit uncommitted as "done." Default is a non-draft PR; open as draft only when the user says so.

@@ -109,3 +109,4 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
 - **Be specific.** "There might be a bug in the form handling" is useless. "The `handleSubmit` function in `QuoteForm.tsx:47` doesn't handle the case where `sections` is an empty array, which causes a TypeError on line 52" is actionable.
 - **Prioritize by production impact.** A bug that crashes the app is more important than a missing loading state. Order your report by severity.
 - **Don't over-test.** Testing that `1 + 1 === 2` is waste. Test behavior, not implementation. Test boundaries and edge cases, not obvious operations.
+- **Every fix ships via a PR.** After bugs are fixed and the suite is green, hand off to `/release` to open the PR — even a one-line fix or a single new test. Never commit directly to `main`. Default is a non-draft PR; open as draft only when the user says so.

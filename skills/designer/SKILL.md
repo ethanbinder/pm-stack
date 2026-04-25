@@ -81,3 +81,4 @@ Existing components that should be used:
 - Be specific about which components and file paths to use. "Use the existing card component" is vague. "Use `Card` from `src/components/ui/card.tsx` with `CardHeader` and `CardContent`" is actionable.
 - Responsive behavior should be addressed for every recommendation, even if it's just confirming that the existing component handles it.
 - Don't redesign things that aren't broken. Stay focused on the task at hand.
+- **If you make code edits during a design pass, ship them via a PR.** Hand off to `/release` to commit, push, and open the PR — never commit directly to `main`. Recommendations-only output (no code touched) is fine to leave unshipped; the follow-up `/engineer` → `/release` cycle handles those changes.

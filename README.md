@@ -95,15 +95,15 @@ claude --add-dir ~/.pm-stack/skills
 
 **`/designer`** — Audit UI against existing components and design system. Ensures new interfaces reuse existing patterns before introducing new ones. Checks accessibility, responsive behavior, and design consistency. Provides specific component paths and implementation guidance.
 
-**`/engineer`** — Write production code following existing codebase conventions. After writing, self-reviews for bugs that pass CI but break in production: race conditions, stale closures, missing error handling, memory leaks. Auto-fixes obvious issues, flags ambiguous ones.
+**`/engineer`** — Write production code following existing codebase conventions. After writing, self-reviews for bugs that pass CI but break in production: race conditions, stale closures, missing error handling, memory leaks. Auto-fixes obvious issues, flags ambiguous ones. Always hands off to `/release` to ship — never commits directly to `main`, even for one-line fixes.
 
-**`/qa`** — Test with an adversarial mindset. Runs existing tests, writes new ones for uncovered paths, tries edge cases and error paths. Fixes bugs it finds, writes regression tests, and produces a confidence-rated test report.
+**`/qa`** — Test with an adversarial mindset. Runs existing tests, writes new ones for uncovered paths, tries edge cases and error paths. Fixes bugs it finds, writes regression tests, and produces a confidence-rated test report. Bug fixes ship via `/release`, not direct commits.
 
-**`/security`** — OWASP Top 10 review against your codebase. Scans for exposed secrets, audits dependencies for known CVEs, checks auth boundaries. Auto-fixes safe issues (gitignore, input sanitization). Produces a severity-rated security report for anything that needs human judgment.
+**`/security`** — OWASP Top 10 review against your codebase. Scans for exposed secrets, audits dependencies for known CVEs, checks auth boundaries. Auto-fixes safe issues (gitignore, input sanitization). Produces a severity-rated security report for anything that needs human judgment. Auto-fixes ship via `/release`, not direct commits.
 
 **`/pr-comments`** — Respond to reviewer feedback on your open PRs. Reads inline and summary comments, classifies each as Agree / Partial / Disagree / Needs-human, and previews a plan before touching GitHub. Implements the fixes it agrees with in a single batched commit, pushes back on the ones it doesn't with specific reasoning, and always signs replies as "{Name}'s coding agent" — inviting live discussion whenever it disagrees.
 
-**`/release`** — Sync with main, run the full check suite (lint, types, tests, build), push, and open a PR with structured format: Problem, Solution, Changes Made, and Before/After screenshots.
+**`/release`** — Sync with main, run the full check suite (lint, types, tests, build), push, and open a PR with structured format: Problem, Solution, Changes Made, and Before/After screenshots. Default is a **non-draft** PR; pass "draft" / "draft PR" / "open as draft" to open it as a draft instead. Every change in PM Stack ships through here — even a one-line edit. Other skills (`/engineer`, `/designer`, `/qa`, `/security`, `/pr-comments`) hand off to `/release` rather than committing directly to `main`.
 
 ### Meta
 
@@ -115,6 +115,7 @@ claude --add-dir ~/.pm-stack/skills
 - **PM workflow over eng workflow.** Skills are organized around the product lifecycle (Think → Plan → Build → Review → Test → Ship → Reflect), not the engineering workflow.
 - **Reuse first.** Every skill checks for existing patterns, components, and conventions before introducing new ones. Your codebase already has opinions — PM Stack respects them.
 - **Ship quality.** Every output — whether a product doc, a slide deck, or a code change — should be production-ready. No placeholder text, no half-finished implementations.
+- **PR-required, always.** Every change — even a one-liner — ships through a pull request opened by `/release`. Skills that touch code (`/engineer`, `/designer`, `/qa`, `/security`, `/pr-comments`) hand off to `/release` rather than committing to `main` directly. Default is a non-draft PR; pass "draft" to `/release` to open as a draft instead.
 
 Inspired by [gstack](https://github.com/garrytan/gstack), focused on the PM Builder.
 

@@ -124,3 +124,4 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context.
 - **Check `.env.example` too.** Sometimes secrets leak into example files.
 - **Scan git history if suspicious.** If you find a `.gitignore` entry for secrets, check `git log` to see if the secret was previously committed and needs rotation.
 - **Don't create false positives.** Only report issues you're confident about. Noise erodes trust.
+- **Every auto-fix ships via a PR.** After applying fixes, hand off to `/release` to open the PR — even a one-line `.gitignore` add or a sanitized log statement goes through review. Never commit directly to `main`. Default is a non-draft PR; open as draft only when the user says so.
