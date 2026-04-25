@@ -27,6 +27,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
    - One-line description of the initiative
    - Any additional context (user feedback, metrics, prior art)
    - Which tabs they want this run (all 10, or a specific subset like "just the strategic one pager")
+   - **Company name** — only ask when (a) the requested tabs include the Strategic One Pager AND (b) `.pm-stack/learnings.md` does not already contain a `Company:` line under a `## Project Facts` heading. After the user answers, append `Company: <answer>` under `## Project Facts` in `.pm-stack/learnings.md` (creating the file or section if absent), so future runs of `/product-doc` skip this question.
 
 2. **Pick the output format.** Ask the user which format to generate:
    - **Markdown files** — written to `product-doc/` in the current working directory (default, no setup required)
@@ -45,7 +46,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 
    - **Google Docs path:** Create **one single Google Doc** titled `{Product Name} — Product Doc`. Inside it, create **one native Google Docs document tab per requested Tab Structure entry**, in order (e.g., `01 — Strategic One Pager`, `02 — Product Spec`, …). Set **Page Setup → Pageless** on the document (not the default paginated layout). If a doc with this title already exists from a prior run, append new tabs alongside the existing ones instead of regenerating. Translate the Tab Structure templates 1:1 into Google Docs formatting — headings become Google Docs headings, bullet lists become bulleted lists, tables become Google Docs tables.
 
-5. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details.
+5. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details. When generating Tab 1 (Strategic One Pager), substitute `[Company Name]` in the Goal section's `### Value for [Company Name]` heading with the company name resolved during intake. If the company name is unknown (user explicitly skipped, file unreadable), leave the literal `[Company Name]` placeholder so the user can fill it in later.
 
 6. **Review and refine.** After generating, ask the user which tabs need refinement.
 
@@ -72,6 +73,14 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 - Paint the picture in 2-3 bullets.
 
 ## Goal
+
+### Value for End User
+- Why/how this benefits the user. Why will they care?
+
+### Value for [Company Name]
+- How this advances our objectives and/or moves our leading metrics.
+
+### Metrics
 - Primary metric this initiative moves (e.g., "Increase D7 retention by 5%")
 - Secondary metrics and guardrails
 - Success criteria — how do we know we won?
