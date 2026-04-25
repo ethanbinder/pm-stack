@@ -26,6 +26,7 @@ Every change in this repo — even a single-line edit — ships via a pull reque
 - Each logical change gets its own branch and PR. Don't stack unrelated edits on an existing feature branch (e.g., don't pile a footer rebrand onto a Jira-integration branch).
 - The default PR is **non-draft**. Open as **draft** only when the user explicitly says so ("draft", "draft PR", "open as draft") — pass `--draft` to `gh pr create` in that case.
 - This rule applies to all code-touching skills (`/engineer`, `/designer`, `/qa`, `/security`, `/pr-comments`). Each ends with a hand-off to `/release` — never a direct commit to `main`.
+- **Every PR must link to a tech plan.** `/release` Phase 0 enforces this — it will not proceed past Phase 0 until `product-doc/04b-tech-plan.md` exists in the branch. The choice is **full** (`/eng-manager` for substantive features) vs **small** (`/eng-manager --small`, auto-populated from the diff for typo fixes / README-only changes / one-line bugs / dependency bumps). There is no "skip tech plan" path. Default on `tune: never-ask` is `small` so silenced users still get a tech plan on every PR.
 
 ## Onboarding
 
