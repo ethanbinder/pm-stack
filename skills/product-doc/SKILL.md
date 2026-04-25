@@ -59,7 +59,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 **Title:** [insert title]
 **Contributors:** [tag contributors]
 
-## Summary
+## Context
 - One paragraph. What is this, why does it matter, what's the expected outcome.
 
 ## Problem
