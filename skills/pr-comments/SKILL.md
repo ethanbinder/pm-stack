@@ -137,3 +137,4 @@ End with: "Run `/pr-comments` again after the reviewer responds — or pull me i
 - **Never escalate a disagreement.** Your job is to reply once, thoughtfully, and invite a live conversation. If the reviewer pushes back on your push-back, stop and hand it to the PM Builder — don't get into a back-and-forth on someone else's PR.
 - **Product / UX / naming decisions are Needs-human.** If the comment is about copy, API contract shape, UX behavior, or scope, hand it off. You don't own those calls.
 - **Respect the codebase.** Every fix matches existing conventions and test patterns. Re-read neighbors before editing.
+- **Push to the open PR's branch only.** Every fix from a `/pr-comments` run lands on the existing PR via the batched commit in Phase 4 — never on `main`, never on a side branch, never as a separate PR. If a fix is genuinely out of scope for the open PR, surface it to the PM Builder and let them spin up a fresh `/engineer` → `/release` cycle.
