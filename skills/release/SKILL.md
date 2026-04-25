@@ -128,13 +128,13 @@ Apply a ticket-first convention to the whole release:
 [1-2 sentences: What user or business problem does this solve?]
 
 ### Before
-[Insert Screenshot]
+[Insert Screenshot / Video]
 
 ## Solution
 [1-2 sentences: What approach did we take?]
 
 ### After
-[Insert Screenshot]
+[Insert Screenshot / Video]
 
 ## Changes Made
 - [Bullet each meaningful change]
@@ -178,7 +178,7 @@ Built with [Ethan's PM Stack](https://github.com/ethanbinder/pm-stack)
 - **Fix issues, don't skip them.** If lint fails, fix it. If tests fail, fix them. Don't use `--no-verify` or skip hooks.
 - **The PR description matters.** It's often the first thing a reviewer reads. Make it clear and complete.
 - **Summary is one sentence.** Not two. Not a paragraph. A reviewer should know what this PR does in 3 seconds of reading.
-- **Before/After are visual-only.** Drop a screenshot (or a short snippet / side-by-side diff for CLI or code-structure changes) into each `### Before` / `### After`. If there is nothing visual to show — pure docs change, backend-only change, dependency bump — **omit both subtitles entirely**. Do not pad with `N/A` or prose; the written state explanation already lives in Problem and Solution.
+- **Before/After are visual-only.** Drop a screenshot, a short video clip, or a side-by-side snippet/diff (for CLI or code-structure changes) into each `### Before` / `### After`. If there is nothing visual to show — pure docs change, backend-only change, dependency bump — **omit both subtitles entirely**. Do not pad with `N/A` or prose; the written state explanation already lives in Problem and Solution.
 - **Testing is always included.** Either describe concrete verification steps (commands, manual checks, CI evidence) or write `N/A` with a 1-line reason (e.g. `N/A — docs-only, no runtime behavior changed`). Never leave it empty.
 - **One PR per initiative.** Don't bundle unrelated changes. If you find unrelated issues during the process, note them but don't include them in this PR.
 - **Every change ships through `/release`.** Other skills (`/engineer`, `/designer`, `/qa`, `/security`) hand off here — they do not commit directly. Even a one-line fix gets a branch + PR. No uncommitted "done" edits, no direct commits to `main`.
