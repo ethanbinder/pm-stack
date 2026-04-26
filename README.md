@@ -39,29 +39,40 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 
 ## Quick Start
 
-**Install:**
+### 1. Pick a home for your repos (recommended)
+
+The simplest setup is to keep all your work in one parent folder. If you don't already have one, create a `Development/` folder somewhere convenient:
 
 ```bash
-git clone https://github.com/ethanbinder/pm-stack.git ~/.pm-stack
+mkdir -p ~/Desktop/Development
+cd ~/Desktop/Development
 ```
 
-**Use in any project** by adding to your `.claude/settings.json`:
+Why: PM Stack works no matter where you clone it, but keeping all your repos under one parent folder means PM Stack lives next to the projects it supports, you can grep across them easily, and the auto-sync hook (step 3 below) keeps everything pointed at one stable location.
 
-```json
-{
-  "permissions": {
-    "additionalDirectories": ["~/.pm-stack/skills"]
-  }
-}
-```
-
-Or one-shot:
+### 2. Clone PM Stack
 
 ```bash
-claude --add-dir ~/.pm-stack/skills
+git clone https://github.com/ethanbinder/pm-stack.git
+cd pm-stack
 ```
 
-**Try it:**
+### 3. Run the installer
+
+```bash
+./install.sh
+```
+
+The installer asks four Y/n questions, one per integration. Each question explains what it does and why before asking — say no to any you don't want, they're all independent:
+
+1. **Make skills discoverable from any folder** — symlinks each skill into `~/.claude/skills/` so `/engineer`, `/release`, `/start`, etc. are invocable from any project, not just inside this repo.
+2. **Let skills reach `references/` and `product-doc/`** — adds PM Stack's root to Claude Code's `additionalDirectories` so skills can read their supporting files from any working directory.
+3. **Auto-invoke `/start` after `git pull`/`fetch`/`clone`** — installs PM Stack's existing post-git hook globally so it fires in any repo, not just inside this one.
+4. **Auto-update PM Stack on every Claude session start** — installs a `SessionStart` hook that quietly `git pull --ff-only`s this repo and re-syncs your skill symlinks, so new skills landing upstream show up automatically with no manual command.
+
+After it finishes, open Claude Code in any project folder and type `/` to see your PM Stack skills.
+
+**Try them:**
 
 ```
 /product-doc    → Create a complete product document
@@ -69,9 +80,21 @@ claude --add-dir ~/.pm-stack/skills
 /release        → Ship a PR
 ```
 
-**First session:** open Claude Code in any project with PM Stack on the path and Claude will ask what you're building, then offer two lanes — 0 → 1 (full strategy stack) or fast iteration (straight to a production-ready PR).
+**First session:** open Claude Code in any project with PM Stack installed and Claude will ask what you're building, then offer two lanes — 0 → 1 (full strategy stack) or fast iteration (straight to a production-ready PR).
 
-**After a pull:** if you're working inside the pm-stack repo and run `git pull` / `git fetch` / `git clone`, Claude will re-invoke `/start` automatically (via a project-level hook in `.claude/settings.json`). Copy that hook into your own project's `.claude/settings.json` if you want the same behavior in repos that have PM Stack on the path.
+### Re-running
+
+`./install.sh` is safe to run again any time — it detects what's already in place and is a no-op for steps you've already accepted. If you opted into step 4's auto-sync hook, you don't need to re-run it after a `git pull`; the hook handles that for you at the start of every session.
+
+### Minimal alternative
+
+If you'd rather not modify your global Claude Code config, skip the installer and use:
+
+```bash
+claude --add-dir <path-to-pm-stack>/skills
+```
+
+This makes the skills directory readable per session, but skills won't auto-discover as invocable `/start`, `/engineer`, etc., and the post-git and auto-sync hooks won't be installed. The interactive installer is the recommended path.
 
 ## Skills
 
