@@ -35,7 +35,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 2. **Pick the output format.** Ask the user which format to generate:
    - **Markdown files** — written to `product-doc/` in the current working directory (default, no setup required)
    - **Google Docs** — one Google Doc with all requested tabs inside it as native Google Docs document tabs
-   - **Confluence** — one Confluence page per supported tab. Today's supported tabs are **Tab 2 (Product Spec)** and **Tab 7 (Experimentation Plan)**. Only offer this option when (a) the requested tabs include any of the supported tabs AND (b) `command -v confluence` succeeds (the `confluence` CLI is on PATH). If those conditions aren't met, do not surface the option.
+   - **Confluence** — one Confluence page per supported tab. Today's supported tabs are **Tab 2 (Product Spec)**, **Tab 7 (Experimentation Plan)**, and **Tab 8 (Critical Launch Checklist / OK2Ship)**. Only offer this option when (a) the requested tabs include any of the supported tabs AND (b) `command -v confluence` succeeds (the `confluence` CLI is on PATH). If those conditions aren't met, do not surface the option.
 
 3. **If Google Docs, confirm the environment.** Ask which Claude surface they're running in:
    - **Claude Chat** (uses the Google Drive Connector)
@@ -46,8 +46,8 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 
 3b. **If Confluence, validate eligibility and gather setup.**
     - Re-confirm `command -v confluence` succeeds. If not, tell the user the CLI isn't available and ask whether to fall back to Markdown or Google Docs.
-    - **Confluence supports Tabs 2 and 7 (one page each).** If the user requested tabs *other* than the supported set, ask whether to (a) generate those other tabs separately as Markdown / Google Docs in the same run, or (b) skip them. Tabs that are not Confluence-supported can be written as Markdown / Google Docs alongside the Confluence pages — Confluence creation only handles the supported tabs.
-    - If the user requested **multiple** Confluence-supported tabs in the same run (e.g. Tab 2 + Tab 7), create one Confluence page per supported tab.
+    - **Confluence supports Tabs 2, 7, and 8 (one page each).** If the user requested tabs *other* than the supported set, ask whether to (a) generate those other tabs separately as Markdown / Google Docs in the same run, or (b) skip them. Tabs that are not Confluence-supported can be written as Markdown / Google Docs alongside the Confluence pages — Confluence creation only handles the supported tabs.
+    - If the user requested **multiple** Confluence-supported tabs in the same run (e.g. Tab 2 + Tab 7 + Tab 8), create one Confluence page per supported tab.
     - Ask the user for the Confluence **space key** (e.g. `PROD`, `ENG`). If `confluence config` reveals a default, offer it as the suggestion. The user can override. The same space key applies to all Confluence pages created in this run.
     - Ask for an optional **parent page ID** (the page the new content will live under). Skip the prompt if the user replies *"none"* or doesn't have one. The same parent applies to all Confluence pages created in this run; if the user wants different parents per tab, they can move pages after creation.
 
@@ -63,12 +63,15 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
      |---|---|---|
      | Tab 2 (Product Spec) | `references/confluence-product-spec-template.md` | `<Product Name> — Product Spec` |
      | Tab 7 (Experimentation Plan) | `references/confluence-ab-test-template.md` | `<Product Name> — Experimentation Plan` |
+     | Tab 8 (Critical Launch Checklist) | `references/confluence-ok2ship-template.md` | `<Product Name> — OK2Ship` |
 
      The `confluence create` invocation is `confluence create --space-key <KEY> --title "<page title>" [--parent-id <ID>]` for each page.
 
      **Tab 2 (Product Spec) populate-time substitution:** When populating the `### Assumptions & Constraints` table, use the user's Assumptions & Constraints intake answer directly: split the prose into the `**Assumptions**` cell (things believed-true) and the `**Constraints**` cell (limitations the plan must respect). If the user skipped that question, leave both cells with their placeholder copy so the writer can fill them in by hand.
 
      **Tab 7 (Experimentation Plan) populate-time substitution:** Ground the experimentation plan in the Strategic One Pager (Metrics → Primary Metric, Vision → Hypothesis framing) and Product Spec (Requirements → variant scope) when those exist locally. Leave the **Reviews** table cells blank so the team fills them in by hand.
+
+     **Tab 8 (Critical Launch Checklist / OK2Ship) populate-time substitution:** Ground the OK2Ship in the Strategic One Pager + Product Spec + the codebase: Feature Summary from One Pager High-Level Requirements, Links section pre-filled with the local Product Spec / Tech Plan / Figma references the user has supplied, Release Schedule's "Minimum app build" / "Minimum hardware / firmware version" left blank when the project doesn't have signals for them. Leave **all reviewer / approver name cells** blank — the writer fills these in based on their team. Substitute `[Company Name]` in the Survey Results column header (`X is ready for the rest of [Company Name]'s users`) using the persisted `Company:` line from `.pm-stack/learnings.md` when it exists; if not, leave the placeholder for the writer.
 
      If the user requested tabs that are *not* Confluence-supported (per step 3b), generate those in their selected fallback format (Markdown or Google Docs) in the same run.
 
