@@ -1,31 +1,33 @@
-# Tech Plan: Use commit SHA (not branch) in /release tech-plan URLs
+# Tech Plan: Define the S/M/L/XL effort scale
 
 **Author**: Ethan Binder
 
-**Objective**: Fix `/release`'s tech-plan URL convention so links in PR bodies and Jira comments survive `gh pr merge --delete-branch`. Switch the URL from `/blob/{branch}/...` to `/blob/{commit}/...`, where `{commit}` is `git rev-parse HEAD` on the branch at PR-open time.
+**Objective**: Anchor the Strategic One Pager's Effort Estimate to concrete calendar-time bounds (scoped to a 1–2 SWE staffing assumption), surface the scale at intake so the user picks informedly, and substitute the size letter *plus* its descriptor into the rendered doc so reviewers don't need a separate legend.
 
 **PRD & Design Link**:
 
 ---
 
 ## Problem Statement
-Every PR `/release` opens includes a hyperlinked **Tech Plan** entry in the **References:** block (and a parallel Jira ticket comment in Jira mode). Both URLs were built with the branch name baked in: `https://github.com/{owner}/{repo}/blob/{branch}/product-doc/04b-tech-plan.md`. As soon as the PR was squash-merged with `--delete-branch` (the standard merge for this repo), the branch disappeared on the remote and every prior **Tech Plan** link 404'd. PRs #36–#40 in this repo all have broken tech-plan links for exactly this reason. The convention was fragile — clicking "Tech Plan" on a merged PR returned `file not found`.
+PR #38 added an `**Effort Estimate:** [S/M/L/XL]` bullet to the Strategic One Pager and an intake question to populate it, but never *defined* what the four sizes meant. The user typed a letter without a scale; reviewers read a letter without context. Anchoring the scale to "1–2 SWEs" calendar time turns it from a guess into a meaningful signal:
+
+- **S** — days for 1–2 SWEs (<5 days)
+- **M** — weeks for 1–2 SWEs (<8 weeks)
+- **L** — months for 1–2 SWEs (<6 months)
+- **XL** — more than 6 months for 1–2 SWEs
 
 ## Changes Made
-- `skills/release/SKILL.md` (line 48) — Jira-mode tech-plan URL: changed the URL recipe from `/blob/{branch}/...` to `/blob/{commit}/...`, where `{commit}` is `git rev-parse HEAD` (not `git rev-parse --abbrev-ref HEAD`). Annotation added: *"use the commit SHA, not the branch name, so the link stays valid after `gh pr merge --delete-branch` removes the feature branch on remote."*
-- `skills/release/SKILL.md` (line 125) — PR body **References** block tech-plan URL: same recipe change with the same annotation. The `## Tech Plan` entry now bakes in a permanent commit SHA at PR-open time instead of a branch name.
+- `skills/product-doc/SKILL.md` (line 31, Effort estimate intake bullet) — extended the *Phrasing:* sub-clause to render the four scale definitions on the lines after the question, so the user sees the scale next to the prompt.
+- `skills/product-doc/SKILL.md` (line 50, Generate step) — expanded the `[S/M/L/XL]` substitution rule with the four `<key>` → `<key> (<descriptor>)` mappings. The rendered doc now shows e.g. `**Effort Estimate:** M (weeks for 1–2 SWEs, <8 weeks)` instead of just `**Effort Estimate:** M`. The skip-fallback ("leave the literal placeholder if unknown") is unchanged.
 
-A commit SHA is permanent — even after `--delete-branch`, the commit remains in the repo's object store (reachable from `main` via the squash merge). Branch names are mutable references; commit SHAs are not. Using the SHA is the right primitive for "the tech plan as it shipped with this PR."
-
-Tabs / templates elsewhere are unchanged. The `gh repo view --json nameWithOwner` derivation for `{owner}/{repo}` is unchanged.
+Tab 1 template (`- **Effort Estimate:** [S/M/L/XL]`) is intentionally untouched. The descriptor is added at substitution time, not baked into the placeholder, to keep the unsubstituted form short and scan-able. Tabs 2–10 are unchanged. The Tab 5 Eng Estimates effort table also uses S/M/L/XL but at the per-component level — a different shape, intentionally not rescoped here.
 
 ## Testing
 N/A — pure SKILL.md instruction edit, no runtime behavior in this repo. Verified by:
-- `git diff --stat` shows only `skills/release/SKILL.md` and `product-doc/04b-tech-plan.md`.
-- Both occurrences of `/blob/{branch}/...` in the tech-plan URL recipe are replaced with `/blob/{commit}/...`.
-- The PR opened from this branch will use the new convention — its **Tech Plan** link bakes in the head commit SHA instead of the branch name. After this PR is squash-merged with `--delete-branch`, that link will still resolve (verifiable by clicking).
+- `git diff --stat` shows only `skills/product-doc/SKILL.md` (+2 lines, net) and `product-doc/04b-tech-plan.md`.
+- The Effort estimate intake bullet now contains the four `S/M/L/XL` scale definitions inline.
+- The Generate step now spells out the four `<key>` → `<key> (<descriptor>)` mappings.
+- The Tab 1 template (`- **Effort Estimate:** [S/M/L/XL]`) is byte-identical to `main`.
 
 ## Risks
-- **Past PRs (#36–#40)** are not retroactively fixed — their tech-plan links will continue to 404 because their branches are already deleted. The user explicitly opted to fix going forward only, not back-fill.
-- **Stale-tech-plan-after-additional-pushes edge case.** If someone pushes more commits to the PR's branch after `gh pr create` runs (e.g. addressing reviewer feedback that touches `04b-tech-plan.md`), the URL in the PR body will point at the *original* head commit SHA, not the latest tech-plan content. Acceptable: the URL still resolves, just to an older version, and the latest version is always at `product-doc/04b-tech-plan.md` on the branch (or on `main` post-merge). If this becomes a real problem, a follow-up could add a post-merge "rewrite the tech-plan link to the merge commit SHA" step in `/release` — not in scope here.
-- No security or data-handling implications. No file format changes. No breakage for `gh repo view --json nameWithOwner` callers.
+- None — purely an instruction edit. No conditionals or logic outside the skill's runtime. Existing one pagers already on disk are not back-filled (they keep the bare size letter without the descriptor); only net-new docs generated after this ships will carry the descriptor. Tab 5's per-component effort sizing is unaffected.
