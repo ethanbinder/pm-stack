@@ -3,11 +3,12 @@
 ## Overview
 
 | **Context** | [One-paragraph framing: what this project is and why it matters now.] |
+| **Strategic One Pager** | [Link to the Strategic One Pager (Tab 1) — the prerequisite framing this spec builds on.] |
 | **Jobs to Be Done** | [Top JTBD framings, *"When __, I want __, so I can __."*] |
 | **Strategic Alignment / OKRs** | [Which company OKRs or strategic bets this advances.] |
 | **Metrics of Success** | [Primary KPIs / metrics — be specific and numeric.] |
 | **Project Goal** | [Specific, measurable target — e.g. "% of DAU engaging," "<X minutes to activate."] |
-| **Links** | [Strategic One Pager · Tech Plan · supporting research · prior art.] |
+| **Links** | [Tech Plan · supporting research · prior art.] |
 | **Launch Info** | [Fixed date or flexible. Quarter or specific milestone.] |
 | **Team** | [PM · Designer · Visual Designer · EM · Eng · Analytics · Content.] |
 
