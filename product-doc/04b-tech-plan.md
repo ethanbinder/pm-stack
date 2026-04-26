@@ -1,8 +1,8 @@
-# Tech Plan: Add interactive install.sh and simplify README setup flow
+# Tech Plan: Generalize Confluence Product Spec template to match polished PRD format
 
 **Author**: Ethan Binder
 
-**Objective**: Replace the README's existing `--add-dir ~/.pm-stack/skills` setup snippet with a new interactive `install.sh` that sets up PM Stack the way it's actually meant to be used — skills discoverable globally, references reachable, post-git hook installed globally, and a `SessionStart` auto-sync hook so new skills landing upstream show up automatically. Also recommend a parent `Development/` folder for users who don't already have one.
+**Objective**: Replace `references/confluence-product-spec-template.md` with a generalized version that visually matches a polished tracker-PRD layout — same section order, single-column key/value tables, `+++` collapsible guidance blocks, MLP / In-Scope / Bonus / Out-of-Scope row categorization, and a Plan/Tier Availability + Region/Localization layout — but stripped of any single company's identity so PM Stack users at any company can produce specs that look the same shape.
 
 **PRD & Design Link**:
 
@@ -10,39 +10,15 @@
 
 ## Problem Statement
 
-The current `Quick Start > Install` instructs users to run `claude --add-dir ~/.pm-stack/skills`, which only makes the skills directory readable per session — it does not register the skills as discoverable, does not install the post-git hook outside the PM Stack repo, and provides no auto-sync. New users following the README hit this gap silently and never get the experience the skills are designed to deliver. This PR closes that gap with a one-command interactive installer and a friendlier README that recommends a `Development/` parent folder for clean repo organization.
+The current Confluence Product Spec template renders as a passable spec, but it's structurally lighter than the polished PRD layout PM Builders are used to seeing in their tracker — Overview key/value table, expand/collapse guidance blocks, a 5-column Requirements table with In-Scope / Out-of-Scope / Bonus category rows, and a Plan/Tier Availability matrix. We want generated Confluence specs to match that polish out of the box, without baking any single company's identity into the repo template.
 
 ## Changes Made
 
-- `install.sh` (NEW, executable, repo root) — interactive 4-step installer. Resolves PM Stack's location from `$BASH_SOURCE` so it works wherever the user cloned. Each step prints a plain-English explanation of what it does and why before its Y/n prompt. Steps are independent — the user can accept any subset.
-  - **Step 1**: symlinks each `skills/*/` into `~/.claude/skills/` so PM Stack's skills become user-level and invocable from any folder.
-  - **Step 2**: `jq`-merges PM Stack's root into `permissions.additionalDirectories` in `~/.claude/settings.json` so skills can reach `references/` and `product-doc/` from any cwd.
-  - **Step 3**: `jq`-merges a `PostToolUse` entry pointing at `<pm-stack>/.claude/hooks/post-git.sh` into `~/.claude/settings.json` so `/start` re-invokes after `git pull`/`fetch`/`clone` in any repo.
-  - **Step 4**: writes `~/.claude/hooks/sync-pm-stack.sh` (path-resolved at install time) and `jq`-merges a `SessionStart` hook entry. The script does a best-effort `git pull --ff-only` on PM Stack and re-runs the symlink loop, silently no-oping on offline / dirty tree / diverged history. Prunes dangling symlinks for skills removed upstream.
-  - Idempotent: each `jq` merge filters out an existing matching entry before adding, so re-runs produce no semantic diff. Backs up `~/.claude/settings.json` to a timestamped sibling before each modification.
-  - Falls back to printing the JSON snippet for manual paste when `jq` is not installed.
-- `README.md` — `Quick Start > Install` section replaced with a three-step flow: (1) recommend a `~/Desktop/Development` folder for repo organization with a one-paragraph rationale, (2) `git clone`, (3) `./install.sh` with a numbered list of what each installer step does so users can preview before running. Adds a `Re-running` subsection clarifying that `install.sh` is safe to re-run and that step 4's auto-sync makes manual re-syncs unnecessary. Adds a `Minimal alternative` subsection that preserves the original `claude --add-dir` line for users who explicitly don't want global config changes, with an honest note that the minimal path skips skill discovery and hook installation.
-- `README.md` — the existing `After a pull` paragraph (which described the post-git hook as a project-level setup users had to copy by hand) is replaced as part of the new `Quick Start` since step 3 of the installer handles this globally.
-
-No skills, references, hooks, or any other PM Stack runtime files were touched. Existing project-level `.claude/hooks/post-git.sh` and `.claude/settings.json` inside the repo are unchanged — the installer just makes the same hook fire globally.
+- **`references/confluence-product-spec-template.md`** — full rewrite. Section order now: Overview · Assumptions & Constraints · Product Overview · User Stories (`+++` collapsible guidance + 5-col MLP table with In-Scope / Out-of-Scope / Bonus rows under Onboarding / All States / AI Assistant section dividers) · Designs & Copy · Notes for Execution · Dependencies · Plan / Tier Availability · Region/Localization callout · Stakeholders · Reporting · Data Requirements / Privacy · Notes/Open Questions · Spec Approval(s) · Footer. All identity is generic: `[Company Name]`-style placeholders, "User" not "Member", no default OKR / stakeholder / approver names, no device/SKU/team-acronym specifics. `+++ ... +++` collapsibles replace `>` blockquote intros so Confluence renders expand/collapse macros. PM Stack attribution footer preserved.
+- **`README.md`** — one-line touch-up at line 109. The per-skill description for `/product-doc` now lists the new section roster (User Stories collapsible · Plan/Tier Availability · Region/Localization · the rest) so README stays in lockstep with the template per `CLAUDE.md`.
 
 ## Testing
 
-Verified locally on the author's machine:
-
-- `bash -n install.sh` — passes syntax check.
-- `printf 'Y\nY\nY\nY\n' | ./install.sh` against an already-installed `~/.claude/settings.json` → all four steps reported `✓` and the diff between pre- and post-run `jq -S . settings.json` is empty. Strongest possible idempotency check (the author's machine had every piece installed by hand before the installer existed; the installer correctly recognized each as already-present).
-- `ls ~/.claude/skills/ | wc -l` after run → still 13 symlinks, all live and resolving to `<PM Stack>/skills/<name>/`.
-- Symlink targets verified with `readlink ~/.claude/skills/start` → resolves into the live PM Stack tree (so skill bodies' `references/` lookups continue to work).
-- `jq . ~/.claude/settings.json` → valid JSON post-run.
-- The generated `~/.claude/hooks/sync-pm-stack.sh` is `chmod +x` and syntactically valid (`bash -n`).
-
-End-to-end "fresh-user" test (recommended for reviewer): on a machine that has never run the installer, `git clone`, `cd pm-stack`, `./install.sh`, accept all four prompts, then `cd ~ && claude` and confirm `/start`, `/engineer`, `/release` appear in the slash-command picker.
+N/A — template / docs change, no runtime behavior. Manual smoke tests after merge: (1) run `/product-doc` for a dummy initiative on the Confluence path, confirm the rendered Confluence page shows the Overview key/value table, the `+++` expand/collapse blocks, the 5-col Requirements table with category-row dividers, and the empty Plan/Tier Availability table; (2) grep `references/confluence-product-spec-template.md` for any company-specific terms (default OKR names, default stakeholder/approver human names, internal team acronyms, internal-tool URLs) and confirm zero hits.
 
 ## Risks
-
-- **Settings.json merge complexity.** The installer edits `~/.claude/settings.json` via `jq`, which can fail in unusual ways (existing config schema variation, jq version differences). Mitigations: timestamped backup before every write; explicit "no jq" fallback that prints the snippet to paste manually; idempotent merges so a second run after a partial first run cannot duplicate entries.
-- **SessionStart hook latency.** Every Claude Code session now fires a `git pull --ff-only` against PM Stack at startup. Latency cost is small (single git fetch on a small repo), but always present. Mitigation: `--quiet` and `2>/dev/null || true` so the hook never blocks or surfaces noise; users can decline step 4 and keep manual control.
-- **Hardcoded PM Stack path in the generated sync script.** Step 4 writes a sync script with the user's PM Stack path baked in at install time. If the user later moves the PM Stack clone, the sync script will silently fail. Mitigation: `--ff-only ... || true` means failure is non-blocking, and re-running `./install.sh` from the new location regenerates the script with the correct path.
-- **Minimal-alternative path remains supported.** Users who explicitly want zero global config changes can still use `claude --add-dir <pm-stack>/skills` per the README's `Minimal alternative` section. No breaking change.
-- No security implications. The installer only writes to `$HOME/.claude/`, never touches PM Stack repo files, and doesn't execute network code beyond the optional `git pull --ff-only` in step 4 (which the user accepts explicitly).
