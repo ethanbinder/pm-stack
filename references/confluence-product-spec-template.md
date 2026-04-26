@@ -24,11 +24,17 @@
 
 ### Requirements
 
-> Call out functional requirements: happy paths, error/edge states, onboarding. Group into logical sections (main flows · onboarding · edge states · platform-specific notes). Use **MLP / In Scope / Bonus / Out of Scope** to categorize each row. Add visuals (Figma links) where they clarify intent.
+> Call out functional requirements: happy paths, error/edge states, onboarding. Group requirements into themed blocks by inserting a **section-divider row** — a row where only the first cell is filled with `**Section Name** (one-line scope clarifier)` — between blocks. Confluence renders these as banner rows spanning the table. Use **MLP / In Scope / Bonus / Out of Scope** to categorize each requirement row. Add visuals (Figma links) where they clarify intent.
 
 | **#** | **Requirement** | **Scope** | **Notes** | **Visuals** |
 |---|---|---|---|---|
 | 1 | [Requirement description] | MLP / In Scope / Bonus / Out of Scope | [Implementation notes] | [Figma link] |
+| **Onboarding** (education, starter states, calibration, launch, new-user experience) |
+| 2 | [Onboarding requirement] | MLP / In Scope / Bonus / Out of Scope | [Notes] | [Figma link] |
+| **All States** (happy path, error states, offline mode, auth/membership states) |
+| 3 | [State requirement] | MLP / In Scope / Bonus / Out of Scope | [Notes] | [Figma link] |
+| **Platform-Specific** (any platform / device / surface conditions) |
+| 4 | [Platform requirement] | MLP / In Scope / Bonus / Out of Scope | [Notes] | [Figma link] |
 
 | **Rationale for Out of Scope items** | [Why these aren't shipping in v1.] |
 | **Rationale for Bonus items** | [Why these are nice-to-haves, not commitments.] |
