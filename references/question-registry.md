@@ -28,6 +28,7 @@ See `skills/memory/SKILL.md` for how preferences are written and the user-origin
 | `office-hours-mode-select` | office-hours | two-way | Phase 6 — pick Expansion / Selective Expansion / Hold Scope / Reduction. Advisor always recommends one with a one-line reason. | accept the advisor's recommended mode | yes |
 | `office-hours-next-skill` | office-hours | two-way | Phase 7 — run `/product-doc` next or `/data-insights` first? | `/product-doc` (the default downstream hand-off) | yes |
 | `release-tech-plan-prompt` | release | two-way | Phase 0 — when `product-doc/04b-tech-plan.md` is missing, choose between writing a `full` tech plan (via `/eng-manager`) or a `small` one (via `/eng-manager --small`, auto-populated from the diff). Skip is **not** an option — every PR must link to a tech plan. | `small` (auto-populated from the diff; zero friction for trivial PRs while still satisfying the mandatory-tech-plan rule) | yes |
+| `product-doc-ab-test-variant` | product-doc | two-way | When generating Tab 7 (Experimentation Plan) on the Confluence path, choose between the general A/B test template and the agentic AI experimentation variant. | `general` (the broader of the two; safer default since most A/B tests are not agentic) | yes |
 
 ## Adding a new ask
 

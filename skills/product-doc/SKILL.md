@@ -62,14 +62,17 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
      | Tab | Template | Page title |
      |---|---|---|
      | Tab 2 (Product Spec) | `references/confluence-product-spec-template.md` | `<Product Name> — Product Spec` |
-     | Tab 7 (Experimentation Plan) | `references/confluence-ab-test-template.md` | `<Product Name> — Experimentation Plan` |
+     | Tab 7 (Experimentation Plan) — *general* | `references/confluence-ab-test-template.md` | `<Product Name> — Experimentation Plan` |
+     | Tab 7 (Experimentation Plan) — *agentic* | `references/confluence-ab-test-agentic-template.md` | `<Product Name> — Experimentation Plan (Agentic)` |
      | Tab 8 (Critical Launch Checklist) | `references/confluence-ok2ship-template.md` | `<Product Name> — OK2Ship` |
 
      The `confluence create` invocation is `confluence create --space-key <KEY> --title "<page title>" [--parent-id <ID>]` for each page.
 
      **Tab 2 (Product Spec) populate-time substitution:** When populating the `### Assumptions & Constraints` table, use the user's Assumptions & Constraints intake answer directly: split the prose into the `**Assumptions**` cell (things believed-true) and the `**Constraints**` cell (limitations the plan must respect). If the user skipped that question, leave both cells with their placeholder copy so the writer can fill them in by hand.
 
-     **Tab 7 (Experimentation Plan) populate-time substitution:** Ground the experimentation plan in the Strategic One Pager (Metrics → Primary Metric, Vision → Hypothesis framing) and Product Spec (Requirements → variant scope) when those exist locally. Leave the **Reviews** table cells blank so the team fills them in by hand.
+     **Tab 7 (Experimentation Plan) variant choice — registry id `product-doc-ab-test-variant`, two-way, default `general`.** When the user has requested Tab 7 on the Confluence path, ask once: *"Is this A/B test for AI agents / models, or a general product A/B test? (`general` / `agentic`)"*. If `.pm-stack/learnings.md` shows `never-ask` for `product-doc-ab-test-variant`, auto-decide using the default (`general`) and announce *"Auto-decided experimentation-plan variant → general (your preference). Change with `/memory tune product-doc-ab-test-variant`."*. After a non-silenced ask, emit the standard hint *"Reply `tune: never-ask` to silence this next time."*. Pick the matching template from the table above based on the answer.
+
+     **Tab 7 (Experimentation Plan) populate-time substitution (both variants):** Ground the experimentation plan in the Strategic One Pager (Metrics → Primary Metric, Vision → Hypothesis framing) and Product Spec (Requirements → variant scope) when those exist locally. Leave the **Reviews** table cells blank so the team fills them in by hand. The agentic variant additionally leaves the AI-specific guardrail metrics (Thumbs-Up Rate, etc.) as italicized examples — substitute concrete values only when the user has supplied them.
 
      **Tab 8 (Critical Launch Checklist / OK2Ship) populate-time substitution:** Ground the OK2Ship in the Strategic One Pager + Product Spec + the codebase: Feature Summary from One Pager High-Level Requirements, Links section pre-filled with the local Product Spec / Tech Plan / Figma references the user has supplied, Release Schedule's "Minimum app build" / "Minimum hardware / firmware version" left blank when the project doesn't have signals for them. Leave **all reviewer / approver name cells** blank — the writer fills these in based on their team. Substitute `[Company Name]` in the Survey Results column header (`X is ready for the rest of [Company Name]'s users`) using the persisted `Company:` line from `.pm-stack/learnings.md` when it exists; if not, leave the placeholder for the writer.
 
