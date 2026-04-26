@@ -33,6 +33,7 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 2. **Pick the output format.** Ask the user which format to generate:
    - **Markdown files** — written to `product-doc/` in the current working directory (default, no setup required)
    - **Google Docs** — one Google Doc with all requested tabs inside it as native Google Docs document tabs
+   - **Confluence** — a single Confluence page for the Product Spec (Tab 2). Only offer this option when (a) the requested tabs include Tab 2 AND (b) `command -v confluence` succeeds (the `confluence` CLI is on PATH). If those conditions aren't met, do not surface the option.
 
 3. **If Google Docs, confirm the environment.** Ask which Claude surface they're running in:
    - **Claude Chat** (uses the Google Drive Connector)
@@ -41,11 +42,19 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 
    Tell them to pick whichever surface they already have Google Drive connected in. If they say "not sure" or "not set up," either verify connectivity first (in Claude Code: check for a Google Drive MCP tool in the available tool list; in Chat/Cowork: ask the user to confirm the connector is enabled under Settings → Connectors) or read `docs/google-workspace-setup.md` and walk them through setup step-by-step before proceeding.
 
+3b. **If Confluence, validate eligibility and gather setup.**
+    - Re-confirm `command -v confluence` succeeds. If not, tell the user the CLI isn't available and ask whether to fall back to Markdown or Google Docs.
+    - **Confluence is Tab 2 only.** If the user requested tabs *other* than the Strategic One Pager (Tab 1) or Product Spec (Tab 2), ask whether to (a) generate those other tabs separately as Markdown / Google Docs in the same run, or (b) skip them. Tab 1 specifically can also be skipped or written as Markdown alongside the Confluence Product Spec — Confluence creation only handles Tab 2.
+    - Ask the user for the Confluence **space key** (e.g. `PROD`, `ENG`). If `confluence config` reveals a default, offer it as the suggestion. The user can override.
+    - Ask for an optional **parent page ID** (the page the new spec will live under). Skip the prompt if the user replies *"none"* or doesn't have one.
+
 4. **Generate.**
 
    - **Markdown path:** Create a `product-doc/` directory in the user's current working directory if it doesn't exist. For each requested tab, write a markdown file following the Tab Structure template below. Skip tabs the user didn't ask for — don't create empty stub files.
 
    - **Google Docs path:** Create **one single Google Doc** titled `{Product Name} — Product Doc`. Inside it, create **one native Google Docs document tab per requested Tab Structure entry**, in order (e.g., `01 — Strategic One Pager`, `02 — Product Spec`, …). Set **Page Setup → Pageless** on the document (not the default paginated layout). If a doc with this title already exists from a prior run, append new tabs alongside the existing ones instead of regenerating. Translate the Tab Structure templates 1:1 into Google Docs formatting — headings become Google Docs headings, bullet lists become bulleted lists, tables become Google Docs tables.
+
+   - **Confluence path:** Read the body template at `references/confluence-product-spec-template.md`. Populate placeholders per step 5 — *"Populate with substance"* — using intake answers, CLAUDE.md, and codebase knowledge. The trailing `---` and `Built with [Ethan's PM Stack](...)` footer in the template stays in place (matches the convention added for Atlassian content). Pipe the populated body via stdin to `confluence create --space-key <KEY> --title "<Product Name> — Product Spec" [--parent-id <ID>]`. Capture the returned page URL and report it to the user. If the user requested Tab 1 alongside (or any other tabs they opted to keep per step 3b), generate those in their selected fallback format (Markdown or Google Docs) in the same run.
 
 5. **Populate with substance.** Write real, substantive content for each requested tab — never leave sections as "TBD" or "add details here." Use the context from the user's project, CLAUDE.md, and any codebase knowledge to fill in real details. When generating Tab 1 (Strategic One Pager), substitute `[Company Name]` in the Goal section's `### Value for [Company Name]` heading and `[S/M/L/XL]` in the What's Needed to Get Started section's `**Effort Estimate:**` bullet — for the latter, render the user's pick *plus* its short descriptor (`S` → `S (days for 1–2 SWEs, <5 days)`, `M` → `M (weeks for 1–2 SWEs, <8 weeks)`, `L` → `L (months for 1–2 SWEs, <6 months)`, `XL` → `XL (more than 6 months for 1–2 SWEs)`) — using the values resolved during intake. If either is unknown (user explicitly skipped, file unreadable), leave the literal placeholder so the user can fill it in later. The Tab 1 `## Open Questions` and `## Notes` sections are intentionally manual-fill — leave the seed bullets in place rather than fabricating content. Real questions and notes get added by the writer/team over time.
 
