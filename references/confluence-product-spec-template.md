@@ -8,7 +8,7 @@
 | **Strategic Alignment / OKRs** | [Which company OKRs or strategic bets this advances.] |
 | **Metrics of Success** | [Primary KPIs / metrics — be specific and numeric.] |
 | **Project Goal** | [Specific, measurable target — e.g. "% of DAU engaging," "<X minutes to activate."] |
-| **Links** | [Tech Plan · supporting research · prior art.] |
+| **Relevant Links** | [Tech Plan · supporting research · prior art.] |
 | **Launch Info** | [Fixed date or flexible. Quarter or specific milestone.] |
 | **Team** | [PM · Designer · Visual Designer · EM · Eng · Analytics · Content.] |
 
