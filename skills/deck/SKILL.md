@@ -19,6 +19,26 @@ Read `references/pm-preamble.md` in the PM Stack directory for shared context. I
 
 If a `product-doc/` directory exists for this initiative, read it first — the deck should be consistent with the product document.
 
+**Defer to a company-specific deck skill if installed.** Before doing any work, run this detection:
+
+1. List `~/.claude/skills/`. Look for any skill whose name suggests branded presentations — e.g. ending in `-presentation`, `-deck`, or matching the company name implied by `$CLAUDE_CONTEXT_DIR/decks/` (if `CLAUDE_CONTEXT_DIR` is set).
+2. If a match exists **and** `$CLAUDE_CONTEXT_DIR/decks/` exists, that skill is almost certainly the right tool — branded skills typically ship with maintained templates, assets, and an export pipeline this generic skill can't match.
+3. Surface what you found: tell the user the skill name and recommend they invoke it directly (e.g. `/<skill-name>`).
+4. Offer to proceed with the generic flow only if they confirm they want a non-branded or cross-company deck. If they confirm, continue below.
+
+If no match is found, proceed below silently — don't ask the user about company skills they don't have.
+
+**Company-specific context (optional).** If the `CLAUDE_CONTEXT_DIR` environment variable is set, check `$CLAUDE_CONTEXT_DIR/decks/` for company-specific overrides:
+
+- `brand.md` — read in full; apply voice, tone, visual identity, and slide patterns to every slide. This is the load-bearing file when present.
+- `glossary.md` — read in full; use the company's terminology for stakeholders, acronyms, products, and metric definitions exactly as written.
+- Any brand/design guideline PDF in the root of `decks/` (e.g. `*-brand-design-guidelines.pdf`) — note its existence; skim only when `brand.md` doesn't answer a specific visual question.
+- `templates/<audience>.md` — if a markdown template matches the audience picked in step 4 (e.g. `exec-review.md` for exec/board), use it instead of the Default Slide Structure below.
+- `templates/*.pptx` and `templates/*.pdf` — if generating a `.pptx`, list these and tell the user which template will serve as the visual baseline (cover slide, masters, color palette, fonts) before generation. The `anthropic-skills:pptx` skill may not start from a template directly — if not, generate the deck and then advise the user to apply the template's cover/masters manually.
+- `examples/` — list filenames; if any look topically relevant, skim titles and the first 2–3 slides for tone/style alignment. Do not read full contents.
+
+If `CLAUDE_CONTEXT_DIR` is unset or `$CLAUDE_CONTEXT_DIR/decks/` doesn't exist, proceed with the Default Slide Structure as today.
+
 ## Workflow
 
 1. **Gather context.** Ask the user, **one question at a time** (wait for each answer):

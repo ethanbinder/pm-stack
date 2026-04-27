@@ -86,6 +86,32 @@ After it finishes, open Claude Code in any project folder and type `/` to see yo
 
 `./install.sh` is safe to run again any time — it detects what's already in place and is a no-op for steps you've already accepted. If you opted into step 4's auto-sync hook, you don't need to re-run it after a `git pull`; the hook handles that for you at the start of every session.
 
+### Private context (optional)
+
+Some skills can read company-specific context (brand guidelines, glossary, audience-specific templates, example artifacts) from a private directory you keep outside this repo. Set the `CLAUDE_CONTEXT_DIR` environment variable to point at that directory:
+
+```bash
+echo 'export CLAUDE_CONTEXT_DIR="$HOME/Desktop/Development/context"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Skills that currently honor it:
+
+- **`/deck`** — reads `$CLAUDE_CONTEXT_DIR/decks/brand.md`, `glossary.md`, `templates/`, and `examples/` to apply your company's voice, visual identity, and slide patterns. If you've also installed a company-specific deck skill at `~/.claude/skills/` (e.g. one ending in `-presentation` or `-deck`) and `$CLAUDE_CONTEXT_DIR/decks/` is set up, `/deck` will detect it and offer to hand off — your branded skill almost certainly has better templates and assets than the generic flow.
+
+Expected layout (the skill works whether or not the directory exists; missing files are fine):
+
+```
+$CLAUDE_CONTEXT_DIR/
+└── decks/
+    ├── brand.md            # voice, tone, colors, fonts, slide patterns
+    ├── glossary.md         # stakeholders, acronyms, products, metrics
+    ├── templates/          # optional audience-specific .md templates and starter .pptx files
+    └── examples/           # optional past decks for tone/style reference
+```
+
+This directory is **never committed** anywhere. PM Stack only reads the env var name — your path and contents stay local.
+
 ### Minimal alternative
 
 If you'd rather not modify your global Claude Code config, skip the installer and use:
