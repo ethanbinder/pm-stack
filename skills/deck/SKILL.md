@@ -36,6 +36,7 @@ If no match is found, proceed below silently — don't ask the user about compan
 - `templates/<audience>.md` — if a markdown template matches the audience picked in step 4 (e.g. `exec-review.md` for exec/board), use it instead of the Default Slide Structure below.
 - `templates/*.pptx` and `templates/*.pdf` — if generating a `.pptx`, list these and tell the user which template will serve as the visual baseline (cover slide, masters, color palette, fonts) before generation. The `anthropic-skills:pptx` skill may not start from a template directly — if not, generate the deck and then advise the user to apply the template's cover/masters manually.
 - `examples/` — list filenames; if any look topically relevant, skim titles and the first 2–3 slides for tone/style alignment. Do not read full contents.
+- `share.md` — read in full; describes the company's deck publishing/sharing system (UI, endpoint, auth model, asset rules, naming convention). When present, publishing is part of finalize — see Workflow step 7. When absent, finalize ends at the local file.
 
 If `CLAUDE_CONTEXT_DIR` is unset or `$CLAUDE_CONTEXT_DIR/decks/` doesn't exist, proceed with the Default Slide Structure as today.
 
@@ -69,6 +70,8 @@ If `CLAUDE_CONTEXT_DIR` is unset or `$CLAUDE_CONTEXT_DIR/decks/` doesn't exist, 
    - **Google Slides path:** Create a new Google Slides deck in the user's Drive, titled `{Initiative Name} — {Audience Type}`. Each slide uses the same Default Slide Structure below. Same audience-based slide count and same "no empty slides" rule apply.
 
 6. **Review.** Present the slide outline to the user and ask if any slides need adjustment before finalizing.
+
+7. **Publish (when configured).** If `$CLAUDE_CONTEXT_DIR/decks/share.md` was found in step 0's context discovery, follow it to publish the finalized deck and produce a shareable link. Treat the link as part of the deliverable, not an optional follow-up — don't stop at the local file. Recommend the safest publishing path described in `share.md` first; never ask the user to paste auth cookies, session tokens, or other live credentials unprompted. If `share.md` is absent, skip this step silently.
 
 ## Default Slide Structure
 
