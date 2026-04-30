@@ -17,7 +17,7 @@ PM Stack is a collection of Claude Code skills for PM Builders — product manag
 - Skills should reference `references/pm-preamble.md` for shared PM Builder context.
 - Keep skills self-contained — a skill should work without any other skill installed.
 - When adding or removing a skill directory under `skills/`, update the count in `README.md`'s tagline ("Nine specialized skills...") in the same PR.
-- Keep `README.md` in lockstep with the rest of the repo. Any change that alters what a skill does, how it's invoked, what's in `references/` or `docs/`, or the project's setup/install flow MUST update the matching parts of `README.md` in the same PR — at minimum the workflow table row ("What It Does") and the longer per-skill description in the Strategy/Engineering/Meta sections. Don't ship the code change and the README update separately.
+- Keep `README.md` in lockstep with the rest of the repo. Any change that alters what a skill does, how it's invoked, what's in `references/` or `docs/`, or the project's setup/install flow MUST update the matching parts of `README.md` in the same PR — at minimum the workflow table row ("What It Does"). Don't ship the code change and the README update separately.
 
 ## Shipping
 
