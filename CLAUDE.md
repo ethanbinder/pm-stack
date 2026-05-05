@@ -9,6 +9,7 @@ PM Stack is a collection of Claude Code skills for PM Builders — product manag
 - `skills/` — one directory per skill, each containing a SKILL.md
 - `references/` — shared context files that skills can reference
 - `docs/` — setup guides and documentation
+- `Prototypes/` — interactive HTML prototypes, design system docs, and UX specs (see `Prototypes/README.md` for conventions)
 
 ## Conventions
 
