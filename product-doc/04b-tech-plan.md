@@ -1,8 +1,8 @@
-# Tech Plan: Drop the long-form `## Skills` section from README
+# Tech Plan: Add a top-level `Prototypes/` folder
 
 **Author**: Ethan Binder
 
-**Objective**: Remove the verbose `## Skills` section (and its four subsections — Start, Strategy, Engineering, Meta) from `README.md`. The PM Builder Workflow table at the top of the README already lists every skill, so the long-form section is duplicative and clutters the page. Update `CLAUDE.md`'s lockstep convention to drop its now-stale reference to the removed subsections.
+**Objective**: Give PM Stack a canonical home for interactive prototypes (HTML mockups, design system docs, UX specs) by adding a top-level `Prototypes/` folder, mirroring the structure already in use at `WhoopInc/ai-pm-os/Prototypes/`. Document conventions in a folder README and register the new directory in `CLAUDE.md`'s repo-structure listing.
 
 **PRD & Design Link**:
 
@@ -10,19 +10,19 @@
 
 ## Problem Statement
 
-`README.md` carries the full skill catalog twice: once as a one-row-per-skill workflow table near the top (lines 21–38), and again as a long-form prose section under `## Skills` (lines 125–159) split into Start / Strategy / Engineering / Meta subsections. The two views describe the same skills with the same scope, so a reader who lands on the README scrolls past the same content twice. The workflow table is the more scannable form and is the one most readers use; the long-form section restates it without adding meaningful new information.
+PM Stack is organized today around `skills/`, `references/`, `docs/`, and `product-doc/`. There is no agreed-upon home for the interactive artifacts that PM Builders produce alongside their product work — HTML prototypes, design system docs, or UX specs. Without a canonical folder, prototype files get scattered across the user's `~/Desktop/Development/Prototypes/` workspace, individual project folders, or nowhere reproducible at all, and there is no shared convention for naming, headers, or how to link to them from project docs.
 
-`CLAUDE.md` line 20 codifies a lockstep rule that requires updates to "the longer per-skill description in the Strategy/Engineering/Meta sections" on every skill change. Once the Skills section is gone, that clause is a dangling reference and would mislead future contributors into reinstating the section.
+The `WhoopInc/ai-pm-os` repo solved this by adding a top-level `Prototypes/` directory whose only checked-in file is a `README.md` documenting conventions; new prototypes are dropped in as siblings as they are produced. Replicating that pattern in PM Stack gives PM Builders an obvious place to put prototypes and a one-page reference for how to format them.
 
 ## Changes Made
 
-- **`README.md`** — delete lines 125–159 in the pre-edit numbering (the entire `## Skills` heading plus the four `### Start`, `### Strategy`, `### Engineering`, `### Meta` subsections and every per-skill paragraph beneath them). The blank line separator and the next heading (`## Philosophy`) remain in place, so the document flows directly from `### Minimal alternative` into `## Philosophy`. The PM Builder Workflow table (still lines 21–38), Quick Start, Philosophy, Contributing, and License sections are untouched.
-- **`CLAUDE.md`** — update the lockstep bullet on line 20 to drop "and the longer per-skill description in the Strategy/Engineering/Meta sections" while leaving the rest of the rule intact. The new text still requires the workflow-table row to be updated whenever a skill changes; only the now-nonexistent secondary location is removed.
+- **`Prototypes/README.md`** (new) — documents the folder's purpose (HTML prototypes, design system docs, UX specs), the kebab-case naming convention with three example filenames adapted to PM-Stack-relevant subjects, the required HTML comment header (Prototype/Author/Date/Description), the no-build-step viewing instructions (`open Prototypes/...`), and the markdown linking syntax for referencing prototypes from project folders. Mirrors the structure of `WhoopInc/ai-pm-os/Prototypes/README.md` verbatim with two small framing adaptations (PM Builder voice, PM-Stack example filenames).
+- **`CLAUDE.md`** — add one bullet to the `## Structure` section listing the new `Prototypes/` directory and pointing to its README for conventions. Maintains the lockstep rule's intent that the documented repo structure stays current with the on-disk structure.
 
 ## Testing
 
-N/A — markdown-only documentation change with no runtime behavior. Manual smoke: render the updated `README.md` (GitHub web view post-merge, or any markdown previewer) and confirm the page transitions cleanly from `### Minimal alternative` into `## Philosophy` with no orphaned headings or anchor links. Confirm `grep -nE "Strategy|Engineering|Meta" README.md CLAUDE.md` returns no matches.
+N/A — no runtime behavior, no skills, no tooling, no install-flow change. Manual smoke checks: (1) `ls "PM Stack/Prototypes/"` shows `README.md`; (2) `grep -n "Prototypes/" CLAUDE.md` shows the new structure bullet; (3) the new README renders cleanly in any markdown previewer with the kebab-case examples and HTML comment block formatted as expected.
 
 ## Risks
 
-- **None material.** No code, skill behavior, install flow, or external link is affected. The removed section's content is fully covered by the workflow table at the top of the README and by each skill's own `SKILL.md`. No README anchor (`#skills`, `#start`, `#strategy`, etc.) appears to be linked from elsewhere in the repo or from external skill files; a quick grep across `skills/`, `references/`, `docs/`, and `CLAUDE.md` for those anchors turns up no inbound references. The CLAUDE.md edit is intentional and tightens (rather than weakens) the lockstep rule by pointing it at the single remaining canonical location.
+- **None material.** The change is additive scaffolding — a new folder with a single doc plus a single bullet in `CLAUDE.md`. No existing skill, reference, doc, install step, or hook is touched. No README anchor or skill behavior depends on the prior absence of a `Prototypes/` directory. The folder has no automation behind it, so it cannot regress any flow; the worst case is that it stays empty until the first prototype is dropped in. Future prototypes added under this folder are independent artifacts and inherit no implicit guarantees from the scaffolding PR.
